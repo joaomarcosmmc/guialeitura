@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 class BdLivros extends ChangeNotifier {
  
   final List<Livro> _bdLivros = [];
-  final String url = Bd().UrlBd;
+  final String url = Bd().urlBd;
   List<Livro> get bdLivros {
     return _bdLivros;
   }
