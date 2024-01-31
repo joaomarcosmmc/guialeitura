@@ -1,0 +1,23 @@
+class Livro{
+  String? codigo;
+  String titulo;
+  String autor;
+  String genero;
+  int pagLidas;
+  int qtdPaginas;
+  int metaDia;
+  String status;
+
+  Livro({
+    this.codigo,
+    required this.titulo,
+    required this.autor,
+    required this.genero,
+    required this.pagLidas,
+    required this.qtdPaginas,
+    required this.metaDia,
+    required this.status,
+  });
+
+
+}
