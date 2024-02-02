@@ -50,7 +50,7 @@ class BdLivros extends ChangeNotifier {
       Map<String, dynamic> json = jsonDecode(response.body);
       json.forEach(
         (codLivro, livro) {
-          print(codLivro);
+          
           _bdLivros.add(
             Livro(
               codigo: codLivro,
@@ -70,10 +70,7 @@ class BdLivros extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
-
-    
-
-    
+ 
   }
 
   Future<void> addPagLida(int? qtd, Livro livro) async {
