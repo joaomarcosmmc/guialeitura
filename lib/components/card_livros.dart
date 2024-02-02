@@ -80,7 +80,7 @@ class _CardLivrosState extends State<CardLivros> {
                           '${(percent(widget.livro.pagLidas, widget.livro.qtdPaginas) * 100).toStringAsFixed(0)}%',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 23,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

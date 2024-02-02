@@ -9,11 +9,9 @@ import 'package:http/http.dart' as http;
 
 class BdLivros extends ChangeNotifier {
  
-  final List<Livro> _bdLivros = [];
   final String url = Bd().urlBd;
-  List<Livro> get bdLivros {
-    return _bdLivros;
-  }
+  final List<Livro> _bdLivros = [];
+  List<Livro> get bdLivros => _bdLivros;
 
   addLivros(Livro livro) {
     _bdLivros.add(
@@ -45,28 +43,35 @@ class BdLivros extends ChangeNotifier {
 
   Future<void> getDados() async {
     _bdLivros.clear();
-    final response = await http.get(Uri.parse('$url/livros.json'));
-    debugPrint(response.body);
-    if (response.body == 'null') return;
+    
+    try {
+    final  response = await http.get(Uri.parse('$url/livros.json'));
+      if(response.body.toString() == 'null') return;
+      Map<String, dynamic> json = jsonDecode(response.body);
+      json.forEach(
+        (codLivro, livro) {
+          _bdLivros.add(
+            Livro(
+              codigo: codLivro,
+              titulo: livro['titulo'],
+              autor: livro['autor'],
+              genero: livro['genero'],
+              pagLidas: livro['pagLidas'],
+              qtdPaginas: livro['qtdPaginas'],
+              metaDia: livro['metaDia'],
+              status: livro['status'],
+            ),
+          );
+        },
+      );
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
 
-    Map<String, dynamic> json = jsonDecode(response.body);
-    json.forEach(
-      (codLivro, livro) {
-        _bdLivros.add(
-          Livro(
-            codigo: codLivro,
-            titulo: livro['titulo'],
-            autor: livro['autor'],
-            genero: livro['genero'],
-            pagLidas: livro['pagLidas'],
-            qtdPaginas: livro['qtdPaginas'],
-            metaDia: livro['metaDia'],
-            status: livro['status'],
-          ),
-        );
-      },
-    );
-    notifyListeners();
+    
+
+    
   }
 
   Future<void> addPagLida(int? qtd, Livro livro) async {

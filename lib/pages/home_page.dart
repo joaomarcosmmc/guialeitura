@@ -68,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     List<Livro> listagem = Provider.of<BdLivros>(context).bdLivros;
+
     return Scaffold(
       drawer: Drawer(
         width: MediaQuery.of(context).size.width * 0.6,
@@ -82,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Text('Loading...')
         ],
       ),): 
-       listagem.isEmpty
+       listagem.isEmpty || listagem.toString() == '[]'
           ? const Center(
               child: Text('Nenhum Livro cadastrado'),
             )
