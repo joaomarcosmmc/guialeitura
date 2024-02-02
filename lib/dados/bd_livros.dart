@@ -50,6 +50,7 @@ class BdLivros extends ChangeNotifier {
       Map<String, dynamic> json = jsonDecode(response.body);
       json.forEach(
         (codLivro, livro) {
+          print(codLivro);
           _bdLivros.add(
             Livro(
               codigo: codLivro,
@@ -64,6 +65,7 @@ class BdLivros extends ChangeNotifier {
           );
         },
       );
+
       notifyListeners();
     } catch (e) {
       print(e);
@@ -76,8 +78,8 @@ class BdLivros extends ChangeNotifier {
 
   Future<void> addPagLida(int? qtd, Livro livro) async {
     var pagL = 0;
-    
-    _bdLivros.forEach((element) {
+    final codli = livro.codigo;
+    bdLivros.forEach((element) {
       if (element.codigo == livro.codigo) {
         if ((element.pagLidas + qtd!) >= element.qtdPaginas) {
           pagL = element.qtdPaginas;
@@ -88,6 +90,8 @@ class BdLivros extends ChangeNotifier {
         }
       }
     });
+
+
     await http.patch(
       Uri.parse('$url/livros/${livro.codigo}.json'),
       body: jsonEncode(

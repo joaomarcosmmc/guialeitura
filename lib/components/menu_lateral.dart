@@ -6,7 +6,8 @@ class MenuLateral extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,6 +27,7 @@ class MenuLateral extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(width: 20,),
           TextButton.icon(
             
               onPressed: () {},
