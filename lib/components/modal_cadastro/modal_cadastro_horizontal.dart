@@ -44,7 +44,7 @@ class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
       ),
     );
  
-    Navigator.of(context).pop;
+    Navigator.of(context).pop();
   }
 
   @override

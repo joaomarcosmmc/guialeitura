@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:guialeitura/components/modal_cadastro_horizontal.dart';
-import 'package:guialeitura/components/modal_cadastro_vertical.dart';
+import 'package:guialeitura/components/modal_cadastro/modal_cadastro_horizontal.dart';
+import 'package:guialeitura/components/modal_cadastro/modal_cadastro_vertical.dart';
+
 import 'package:guialeitura/dados/bd_livros.dart';
 import 'package:guialeitura/models/livro.dart';
 import 'package:provider/provider.dart';

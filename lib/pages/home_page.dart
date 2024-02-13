@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guialeitura/components/listagem_livros.dart';
 import 'package:guialeitura/components/menu_lateral.dart';
-import 'package:guialeitura/components/modal_cadastro.dart';
+
+import 'package:guialeitura/components/modal_cadastro/modal_cadastro.dart';
 import 'package:guialeitura/dados/bd_livros.dart';
 import 'package:guialeitura/models/livro.dart';
 import 'package:provider/provider.dart';
