@@ -44,7 +44,7 @@ class BdLivros extends ChangeNotifier {
   Future<void> getDados() async {
     _bdLivros.clear();
     
-    try {
+    //try {
     final  response = await http.get(Uri.parse('$url/livros.json'));
       if(response.body.toString() == 'null') return;
       Map<String, dynamic> json = jsonDecode(response.body);
@@ -67,9 +67,10 @@ class BdLivros extends ChangeNotifier {
       );
 
       notifyListeners();
-    } catch (e) {
-      print(e);
-    }
+    //} 
+    // catch (e) {
+    //   print('$e fasdfljasdlkfjasdçflasdjfasçldhsçlgjhaçlkg' );
+    // }
  
   }
 
