@@ -26,9 +26,9 @@ var appBar = AppBar(
         )),
   ),
   centerTitle: false,
-  title: Row(
+  title: const Row(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: const [
+    children:  [
       Text(
         'Guia de Leitura',
         style: TextStyle(

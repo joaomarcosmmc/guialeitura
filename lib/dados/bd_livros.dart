@@ -8,7 +8,7 @@ import 'package:guialeitura/models/livro.dart';
 import 'package:http/http.dart' as http;
 
 class BdLivros extends ChangeNotifier {
- 
+
   final String url = Bd().urlBd;
   final List<Livro> _bdLivros = [];
   List<Livro> get bdLivros => _bdLivros;
@@ -44,7 +44,7 @@ class BdLivros extends ChangeNotifier {
   Future<void> getDados() async {
     _bdLivros.clear();
     
-    //try {
+  
     final  response = await http.get(Uri.parse('$url/livros.json'));
       if(response.body.toString() == 'null') return;
       Map<String, dynamic> json = jsonDecode(response.body);
@@ -67,16 +67,13 @@ class BdLivros extends ChangeNotifier {
       );
 
       notifyListeners();
-    //} 
-    // catch (e) {
-    //   print('$e fasdfljasdlkfjasdçflasdjfasçldhsçlgjhaçlkg' );
-    // }
- 
+   
+
   }
 
   Future<void> addPagLida(int? qtd, Livro livro) async {
     var pagL = 0;
-    final codli = livro.codigo;
+  
     bdLivros.forEach((element) {
       if (element.codigo == livro.codigo) {
         if ((element.pagLidas + qtd!) >= element.qtdPaginas) {
@@ -100,3 +97,4 @@ class BdLivros extends ChangeNotifier {
     notifyListeners();
   }
 }
+
