@@ -9,9 +9,16 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   final formKey = GlobalKey<FormState>();
-  _submit(){
-     formKey.currentState!.validate();
+  var emailController = TextEditingController();
+  var senhaController = TextEditingController();
+
+  _submit() {
+    formKey.currentState!.validate();
+    print(emailController.text);
+    print(senhaController.text);
   }
+
+  var obscureText = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +26,11 @@ class _AuthPageState extends State<AuthPage> {
       children: [
         Container(
           decoration: const BoxDecoration(
+            image: DecorationImage(
+              
+              image: AssetImage('lib/assets/image/fundoguialeitura.jpeg', ),
+              fit: BoxFit.cover,
+            ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.centerRight,
@@ -42,6 +54,7 @@ class _AuthPageState extends State<AuthPage> {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: emailController,
                             validator: (email) {
                               if (email!.isEmpty || !email.contains('@')) {
                                 return "Digite um E-mail válido.";
@@ -62,14 +75,25 @@ class _AuthPageState extends State<AuthPage> {
                             height: 18,
                           ),
                           TextFormField(
+                            controller: senhaController,
                             validator: (senha) {
-                              if(senha!.isEmpty || senha.length < 5){
+                              if (senha!.isEmpty || senha.length < 5) {
                                 return "Digite uma senha válido.";
-                              }else{
+                              } else {
                                 return null;
                               }
                             },
+                            obscureText: obscureText,
                             decoration: InputDecoration(
+                                suffix: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        obscureText = !obscureText;
+                                      });
+                                    },
+                                    icon: Icon(obscureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility)),
                                 contentPadding: const EdgeInsets.all(10),
                                 label: const Text('Password'),
                                 floatingLabelBehavior:
