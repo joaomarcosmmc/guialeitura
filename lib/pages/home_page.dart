@@ -76,9 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const MenuLateral(),
       ),
       appBar: appBar,
-      body: isLoad?  Center(child: Column(
+      body: isLoad?  const Center(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children:  [
           CircularProgressIndicator(),
           SizedBox(height: 10,),
           Text('Loading...')

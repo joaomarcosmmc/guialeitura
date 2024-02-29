@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:guialeitura/auth/auth.dart';
+
+import 'package:guialeitura/auth/auth_page.dart';
 import 'package:guialeitura/components/livro_detalhe.dart';
 
 import 'package:guialeitura/dados/bd_livros.dart';
