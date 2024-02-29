@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:guialeitura/models/auth.dart';
+import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -14,8 +16,7 @@ class _AuthPageState extends State<AuthPage> {
 
   _submit() {
     formKey.currentState!.validate();
-    print(emailController.text);
-    print(senhaController.text);
+     Provider.of<Auth>(context, listen: false).signup(emailController.text, senhaController.text);
   }
 
   var obscureText = true;

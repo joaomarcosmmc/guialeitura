@@ -3,6 +3,7 @@ import 'package:guialeitura/auth/auth.dart';
 import 'package:guialeitura/components/livro_detalhe.dart';
 
 import 'package:guialeitura/dados/bd_livros.dart';
+import 'package:guialeitura/models/auth.dart';
 import 'package:guialeitura/pages/home_page.dart';
 import 'package:guialeitura/utils/routes.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => BdLivros(),)
+        ChangeNotifierProvider(create: (_) => BdLivros(),),
+        ChangeNotifierProvider(create: (_) => Auth(),)
       ],
       child: MaterialApp(
         
