@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:guialeitura/auth/auth_page.dart';
 import 'package:guialeitura/components/livro_detalhe.dart';
 
 import 'package:guialeitura/dados/bd_livros.dart';
 import 'package:guialeitura/models/auth.dart';
-import 'package:guialeitura/pages/home_page.dart';
+import 'package:guialeitura/pages/auth_or_home_page.dart';
+
 import 'package:guialeitura/utils/routes.dart';
 import 'package:provider/provider.dart';
 
@@ -32,8 +32,7 @@ class MyApp extends StatelessWidget {
    
         debugShowCheckedModeBanner: false,
         routes: {
-          RoutesPage().AUTH : (context)=> const AuthPage(),
-          RoutesPage().INICIO: (context)=> const MyHomePage(),
+          RoutesPage().AUTH_OR_HOMEPAGE : (context)=> const AuthOrHomePage(),          
           RoutesPage().LIVRODETALHE: (context)=> const LivroDetalhe(),
           },
       ),

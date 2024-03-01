@@ -118,7 +118,7 @@ class _AuthPageState extends State<AuthPage> {
                               },
                               obscureText: obscureText,
                               decoration: InputDecoration(
-                                  suffix: IconButton(
+                                  suffix: isLogin? IconButton(
                                       onPressed: () {
                                         setState(() {
                                           obscureText = !obscureText;
@@ -126,7 +126,7 @@ class _AuthPageState extends State<AuthPage> {
                                       },
                                       icon: Icon(obscureText
                                           ? Icons.visibility_off
-                                          : Icons.visibility)),
+                                          : Icons.visibility)):null,
                                   contentPadding: const EdgeInsets.all(10),
                                   label: const Text('Password'),
                                   floatingLabelBehavior:
@@ -138,6 +138,7 @@ class _AuthPageState extends State<AuthPage> {
                             const SizedBox(height: 18),
                             !isLogin
                                 ? TextFormField(
+                                  controller: confirmSenhaController,
                                     validator: (senha) {
                                       if (senha != senhaController.text ||
                                           senha!.isEmpty) {

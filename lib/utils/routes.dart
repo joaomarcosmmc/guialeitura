@@ -1,5 +1,5 @@
 class RoutesPage{
- final AUTH = '/';
- final INICIO = '/inicio';
+ final AUTH_OR_HOMEPAGE = '/';
+
  final LIVRODETALHE = '/livroDetalhe';
 }
