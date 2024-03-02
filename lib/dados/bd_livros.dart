@@ -1,18 +1,18 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:guialeitura/dados/bd.dart';
-
 import 'package:guialeitura/models/livro.dart';
-
 import 'package:http/http.dart' as http;
 
 class BdLivros extends ChangeNotifier {
+  String? _token;
+  List<Livro> _bdLivros = [];
 
-  final String url = Bd().urlBd;
-  final List<Livro> _bdLivros = [];
+  BdLivros(this._token, this._bdLivros);
+ 
   List<Livro> get bdLivros => _bdLivros;
-
+  String url = Bd().urlBd;
+  
   addLivros(Livro livro) {
     _bdLivros.add(
       Livro(
@@ -27,7 +27,7 @@ class BdLivros extends ChangeNotifier {
     );
 
     http.post(
-      Uri.parse('$url/livros.json'),
+      Uri.parse('$url/livros.json?auth=$_token'),
       body: jsonEncode({
         'titulo': livro.titulo,
         'autor': livro.autor,
@@ -43,37 +43,42 @@ class BdLivros extends ChangeNotifier {
 
   Future<void> getDados() async {
     _bdLivros.clear();
-    
-  
-    final  response = await http.get(Uri.parse('$url/livros.json'));
-      if(response.body.toString() == 'null') return;
-      Map<String, dynamic> json = jsonDecode(response.body);
-      json.forEach(
-        (codLivro, livro) {
-          
-          _bdLivros.add(
-            Livro(
-              codigo: codLivro,
-              titulo: livro['titulo'],
-              autor: livro['autor'],
-              genero: livro['genero'],
-              pagLidas: livro['pagLidas'],
-              qtdPaginas: livro['qtdPaginas'],
-              metaDia: livro['metaDia'],
-              status: livro['status'],
-            ),
-          );
-        },
-      );
 
-      notifyListeners();
-   
+    try {
+      
+    final response = await http.get(Uri.parse('$url/livros.json?auth=$_token'));
+    // if (response.body.toString() == 'null'){
+    //   debugPrint(response.body.toString());
+    // return;
+    // } 
+    Map<String, dynamic> json = jsonDecode(response.body);
+    json.forEach(
+      (codLivro, livro) {
+        _bdLivros.add(
+          Livro(
+            codigo: codLivro,
+            titulo: livro['titulo'],
+            autor: livro['autor'],
+            genero: livro['genero'],
+            pagLidas: livro['pagLidas'],
+            qtdPaginas: livro['qtdPaginas'],
+            metaDia: livro['metaDia'],
+            status: livro['status'],
+          ),
+        );
+      },
+    );
 
+    notifyListeners();
+    } catch (e) {
+      print(e);
+      return;
+    }
   }
 
   Future<void> addPagLida(int? qtd, Livro livro) async {
     var pagL = 0;
-  
+
     bdLivros.forEach((element) {
       if (element.codigo == livro.codigo) {
         if ((element.pagLidas + qtd!) >= element.qtdPaginas) {
@@ -86,9 +91,8 @@ class BdLivros extends ChangeNotifier {
       }
     });
 
-
     await http.patch(
-      Uri.parse('$url/livros/${livro.codigo}.json'),
+      Uri.parse('$url/livros/${livro.codigo}.json?auth$_token'),
       body: jsonEncode(
         {'pagLidas': pagL},
       ),
@@ -97,4 +101,3 @@ class BdLivros extends ChangeNotifier {
     notifyListeners();
   }
 }
-

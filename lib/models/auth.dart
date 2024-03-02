@@ -14,7 +14,7 @@ class Auth extends ChangeNotifier {
 
   bool get isAuth {
     bool isValid = _expiresin?.isAfter(DateTime.now()) ?? false;
-    debugPrint(' retorna:  ${_token}');
+
     return _token != null && isValid;
   }
 
@@ -57,6 +57,7 @@ class Auth extends ChangeNotifier {
           seconds: int.parse(body['expiresIn']),
         ),
       );
+
       notifyListeners();
     }
   }

@@ -56,13 +56,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
  
-  bool isLoad = true;
+  bool isLoading = true;
 
   @override
   void initState() {
-    Provider.of<BdLivros>(context, listen: false).getDados().then((value) {setState(() {
-      isLoad = false;
-    });});
+     Provider.of<BdLivros>(context, listen: false).getDados().then((value){
+      setState(() {
+        isLoading = false;
+      });
+     }
+    );
     super.initState();
   }
 
@@ -76,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const MenuLateral(),
       ),
       appBar: appBar,
-      body: isLoad?  const Center(child: Column(
+      body: isLoading?  const Center(child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children:  [
           CircularProgressIndicator(),

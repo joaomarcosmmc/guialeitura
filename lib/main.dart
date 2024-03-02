@@ -18,25 +18,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MultiProvider(
+    return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => BdLivros(),),
-        ChangeNotifierProvider(create: (_) => Auth(),)
+        ChangeNotifierProvider(
+          create: (_) => Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth,BdLivros>(
+          create: (_) => BdLivros('',[]),
+          update: (ctx, auth, previous) {
+            return BdLivros(auth.token??'', previous?.bdLivros ?? []);
+          },
+        ),
       ],
       child: MaterialApp(
-        
         theme: ThemeData(
           primarySwatch: Colors.amber,
         ),
         title: 'Flutter Demo',
-   
         debugShowCheckedModeBanner: false,
         routes: {
-          RoutesPage().AUTH_OR_HOMEPAGE : (context)=> const AuthOrHomePage(),          
-          RoutesPage().LIVRODETALHE: (context)=> const LivroDetalhe(),
-          },
+          RoutesPage().AUTH_OR_HOMEPAGE: (context) => const AuthOrHomePage(),
+          RoutesPage().LIVRODETALHE: (context) => const LivroDetalhe(),
+        },
       ),
     );
   }
 }
-
