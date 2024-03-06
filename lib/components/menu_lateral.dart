@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:guialeitura/models/auth.dart';
+import 'package:provider/provider.dart';
 
 class MenuLateral extends StatelessWidget {
   const MenuLateral({super.key});
@@ -61,12 +63,20 @@ class MenuLateral extends StatelessWidget {
               icon: const Icon(Icons.ad_units_sharp, color: Colors.black),
               label: const Text('Geral',style:TextStyle(color:Colors.black, fontSize: 20))),
               const Divider(),
+              TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.info_outline, color: Colors.black),
+              label: const Text('Sobre',
+                  style: TextStyle(color: Colors.black, fontSize: 20))),
+          const Divider(),
           const Spacer(),
               const Divider(),
           TextButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.info_outline, color: Colors.black),
-              label: const Text('Sobre',style:TextStyle(color:Colors.black, fontSize: 20))),
+              onPressed: () {
+                Provider.of<Auth>(context, listen: false).logOut();
+              },
+              icon: const Icon(Icons.logout_rounded, color: Colors.black),
+              label: const Text('Sair',style:TextStyle(color:Colors.black, fontSize: 20))),
         ],
       ),
     );

@@ -70,4 +70,8 @@ class Auth extends ChangeNotifier {
   Future<void> signin(email, senha) async {
     return _authenticate(email, senha, 'signInWithPassword');
   }
+  void logOut() {
+    _token = null;
+    notifyListeners();
+  }
 }

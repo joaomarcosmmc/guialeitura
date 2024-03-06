@@ -5,8 +5,8 @@ import 'package:guialeitura/models/livro.dart';
 import 'package:http/http.dart' as http;
 
 class BdLivros extends ChangeNotifier {
-  String? _token;
-  List<Livro> _bdLivros = [];
+  final String? _token;
+  final List<Livro> _bdLivros;
 
   BdLivros(this._token, this._bdLivros);
  
@@ -47,10 +47,7 @@ class BdLivros extends ChangeNotifier {
     try {
       
     final response = await http.get(Uri.parse('$url/livros.json?auth=$_token'));
-    // if (response.body.toString() == 'null'){
-    //   debugPrint(response.body.toString());
-    // return;
-    // } 
+ 
     Map<String, dynamic> json = jsonDecode(response.body);
     json.forEach(
       (codLivro, livro) {

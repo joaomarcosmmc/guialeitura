@@ -44,9 +44,13 @@ class _CardLivrosState extends State<CardLivros> {
     var dtPrev = dt.add(Duration(days: prev));
     return LayoutBuilder(
 
-      builder: (_, constraints) => Card(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        elevation: 6,
+      builder: (_, constraints) => Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 1),
+          borderRadius: BorderRadius.circular(20),
+       color: const Color.fromARGB(255, 243, 243, 243),
+        ),
+       
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
           child: Column(

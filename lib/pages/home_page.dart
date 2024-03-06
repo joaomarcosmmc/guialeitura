@@ -35,12 +35,7 @@ var appBar = AppBar(
             color: Colors.black, fontFamily: 'HedvigLetter', fontSize: 26),
         textAlign: TextAlign.right,
       ),
-      SizedBox(width: 15),
-      Icon(
-        Icons.school_outlined,
-        size: 30,
-        color: Colors.black,
-      )
+     
     ],
   ),
   elevation: 0,
