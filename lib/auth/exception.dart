@@ -8,7 +8,8 @@ class ExceptionAuth implements Exception {
     'INVALID_PASSWORD': 'Senha inválida.',
     'USER_DISABLED': 'Acesso inválido.',
     'INVALID_EMAIL' :  'Email inválido',
-    'INVALID_LOGIN_CREDENTIALS' :  'Credenciais de login inválidas.',
+    'INVALID_LOGIN_CREDENTIALS' :  'E-mail e/ou Senha estão incorretos.',
+    'MISSING_PASSWORD' :  'Informe a senha de acesso.',
   };
   final String key;
   ExceptionAuth(this.key);

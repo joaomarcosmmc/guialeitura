@@ -24,28 +24,31 @@ class _AuthPageState extends State<AuthPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Ocorreu um erro.'),
-        content:  Text(msg),
-        actions: [TextButton(onPressed: () {Navigator.of(context).pop();}, child: const Text('Fechar'))],
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Fechar'),
+          ),
+        ],
       ),
     );
-
-    emailController.clear();
-    senhaController.clear();
-    confirmSenhaController.clear();
   }
 
-  _submit() async{
+  _submit() async {
     setState(() {
       isLoad = true;
     });
     formKey.currentState!.validate();
     final auth = Provider.of<Auth>(context, listen: false);
 
-    try  {
-      if (!isLogin)  {
-        await auth.signup( emailController.text, senhaController.text);
+    try {
+      if (!isLogin) {
+        await auth.signup(emailController.text, senhaController.text);
       } else {
-        await auth.signin( emailController.text, senhaController.text);
+        await auth.signin(emailController.text, senhaController.text);
       }
     } on ExceptionAuth catch (error) {
       showErroDialog(error.toString());
@@ -56,9 +59,21 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   var obscureText = true;
+  double percentSizeWidthForm(context, MediaQueryData deviceSize) {
+    if (deviceSize.size.width < 450) {
+      return 0.95;
+    } else if (deviceSize.size.width < 600) {
+      return 0.65;
+    } else if (deviceSize.size.width < 941) {
+      return 0.50;
+    } else {
+      return 0.30;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData deviceSize = MediaQuery.of(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -73,164 +88,172 @@ class _AuthPageState extends State<AuthPage> {
                 ],
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Card(
-                    elevation: 6,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: emailController,
-                              validator: (email) {
-                                if (email!.isEmpty || !email.contains('@')) {
-                                  return "Digite um E-mail válido.";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(10),
-                                  label: const Text('E-mail'),
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                            ),
-                            const SizedBox(
-                              height: 18,
-                            ),
-                            TextFormField(
-                              controller: senhaController,
-                              validator: (senha) {
-                                if (senha!.isEmpty || senha.length < 5) {
-                                  return "Digite uma senha válido.";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              obscureText: obscureText,
-                              decoration: InputDecoration(
-                                  suffix: isLogin? IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          obscureText = !obscureText;
-                                        });
-                                      },
-                                      icon: Icon(obscureText
-                                          ? Icons.visibility_off
-                                          : Icons.visibility)):null,
-                                  contentPadding: const EdgeInsets.all(10),
-                                  label: const Text('Password'),
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                            ),
-                            const SizedBox(height: 18),
-                            !isLogin
-                                ? TextFormField(
-                                  controller: confirmSenhaController,
-                                    validator: (senha) {
-                                      if (senha != senhaController.text ||
-                                          senha!.isEmpty) {
-                                        return "Senha não confere";
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    obscureText: obscureText,
-                                    decoration: InputDecoration(
-                                        suffix: isLogin
-                                            ? IconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    obscureText = !obscureText;
-                                                  });
-                                                },
-                                                icon: Icon(obscureText
-                                                    ? Icons.visibility_off
-                                                    : Icons.visibility))
-                                            : null,
-                                        contentPadding:
-                                            const EdgeInsets.all(10),
-                                        label: const Text('Password'),
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.never,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        )),
-                                  )
-                                : const SizedBox(),
-                            isLogin
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text('Esqueceu a senha? '),
-                                      TextButton(
-                                          onPressed: () {},
-                                          child: const Text('Clique aqui!',
-                                              style: TextStyle(
-                                                  color: Colors.black)))
-                                    ],
-                                  )
-                                : const SizedBox(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            !isLoad
-                                ? ElevatedButton(
-                                    onPressed: _submit,
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateColor.resolveWith(
-                                                (states) => Colors.yellow)),
-                                    child: Text(
-                                      isLogin ? 'Entrar' : 'Cadastrar',
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                    ),
-                                  )
-                                : CircularProgressIndicator(
-                                    color: Colors.yellow[800],
-                                  ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  senhaController.clear();
-                                  emailController.clear();
-                                  confirmSenhaController.clear();
-                                  isLogin = !isLogin;
-                                });
-                              },
-                              child: Text(
-                                isLogin ? 'Cadastrar' : 'Já tenho cadastro!',
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                ),
+          ),
+          Center(
+            child: SizedBox(
+                width: deviceSize.size.width * percentSizeWidthForm(BuildContext, deviceSize),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Card(
+                      elevation: 6,
+                      child: Container(
+                        // width:  deviceSize.size.width * percentSizeWidthForm(BuildContext, deviceSize),
+                        padding: const EdgeInsets.all(10.0),
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: emailController,
+                                validator: (email) {
+                                  if (email!.isEmpty || !email.contains('@')) {
+                                    return "Digite um E-mail válido.";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(10),
+                                    label: const Text('E-mail'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
                               ),
-                            )
-                          ],
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              TextFormField(
+                                controller: senhaController,
+                                validator: (senha) {
+                                  if (senha!.isEmpty || senha.length < 5) {
+                                    return "Digite uma senha válido.";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                obscureText: obscureText,
+                                decoration: InputDecoration(
+                                    suffix: isLogin
+                                        ? IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                obscureText = !obscureText;
+                                              });
+                                            },
+                                            icon: Icon(obscureText
+                                                ? Icons.visibility_off
+                                                : Icons.visibility))
+                                        : null,
+                                    contentPadding: const EdgeInsets.all(10),
+                                    label: const Text('Password'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
+                              ),
+                              const SizedBox(height: 18),
+                              !isLogin
+                                  ? TextFormField(
+                                      controller: confirmSenhaController,
+                                      validator: (senha) {
+                                        if (senha != senhaController.text ||
+                                            senha!.isEmpty) {
+                                          return "Senha não confere";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      obscureText: obscureText,
+                                      decoration: InputDecoration(
+                                          suffix: isLogin
+                                              ? IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      obscureText = !obscureText;
+                                                    });
+                                                  },
+                                                  icon: Icon(obscureText
+                                                      ? Icons.visibility_off
+                                                      : Icons.visibility))
+                                              : null,
+                                          contentPadding:
+                                              const EdgeInsets.all(10),
+                                          label: const Text('Password'),
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.never,
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          )),
+                                    )
+                                  : const SizedBox(),
+                              isLogin
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Text('Esqueceu a senha? '),
+                                        TextButton(
+                                            onPressed: () {},
+                                            child: const Text('Clique aqui!',
+                                                style: TextStyle(
+                                                    color: Colors.black)))
+                                      ],
+                                    )
+                                  : const SizedBox(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              !isLoad
+                                  ? ElevatedButton(
+                                      onPressed: _submit,
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Colors.yellow)),
+                                      child: Text(
+                                        isLogin ? 'Entrar' : 'Cadastrar',
+                                        style:
+                                            const TextStyle(color: Colors.black),
+                                      ),
+                                    )
+                                  : CircularProgressIndicator(
+                                      color: Colors.yellow[800],
+                                    ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    senhaController.clear();
+                                    emailController.clear();
+                                    confirmSenhaController.clear();
+                                    isLogin = !isLogin;
+                                  });
+                                },
+                                child: Text(
+                                  isLogin ? 'Cadastrar' : 'Já tenho cadastro!',
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -46,6 +46,7 @@ class Auth extends ChangeNotifier {
     final body = jsonDecode(response.body);
 
     if (body['error'] != null) {
+      debugPrint(body['error']['message']);
       throw ExceptionAuth(body['error']['message']);
     } else {
 
