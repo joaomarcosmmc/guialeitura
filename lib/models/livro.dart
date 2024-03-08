@@ -1,5 +1,6 @@
 class Livro{
   String? codigo;
+  String uid;
   String titulo;
   String autor;
   String genero;
@@ -11,6 +12,7 @@ class Livro{
   Livro({
     this.codigo,
     required this.titulo,
+    required this.uid,
     required this.autor,
     required this.genero,
     required this.pagLidas,

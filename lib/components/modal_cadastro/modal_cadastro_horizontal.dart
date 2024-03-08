@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:guialeitura/models/auth.dart';
 
 import 'package:guialeitura/models/livro.dart';
+import 'package:provider/provider.dart';
 
 class ModalCadastroHorizontal extends StatefulWidget {
   final Function(Livro livro) salvar;
@@ -34,6 +36,7 @@ class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
 
     widget.salvar(
       Livro(
+        uid: Provider.of<Auth>(context,listen: false).uid??'',
         titulo: widget.tituloText.text,
         autor: widget.autorText.text.isEmpty ? '-' : widget.autorText.text,
         genero: widget.generoText.text.isEmpty ? '-' : widget.generoText.text,

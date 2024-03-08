@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:guialeitura/auth/exception.dart';
+import 'package:guialeitura/components/exception.dart';
 import 'package:guialeitura/dados/bd.dart';
 
 import 'package:http/http.dart';
@@ -27,6 +27,7 @@ class Auth extends ChangeNotifier {
   }
 
   String? get uid {
+    debugPrint('Chamando o get UID, dado: $_uid ');
     return isAuth ? _uid : null;
   }
 
@@ -52,7 +53,7 @@ class Auth extends ChangeNotifier {
 
       _token = body['idToken'].toString();
       _email = body['email'];
-      _uid = body['localid'];
+      _uid = body['localId'];
       _expiresin = DateTime.now().add(
         Duration(
           seconds: int.parse(body['expiresIn']),

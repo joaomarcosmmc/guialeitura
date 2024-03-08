@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
           create: (_) => Auth(),
         ),
         ChangeNotifierProxyProvider<Auth,BdLivros>(
-          create: (_) => BdLivros('',[]),
+          create: (_) => BdLivros('','',[]),
           update: (ctx, auth, previous) {
-            return BdLivros(auth.token??'', previous?.bdLivros ?? []);
+            return BdLivros(auth.token??'',auth.uid??'', previous?.bdLivros ?? [] );
           },
         ),
       ],

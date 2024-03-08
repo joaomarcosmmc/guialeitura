@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guialeitura/auth/exception.dart';
+import 'package:guialeitura/components/exception.dart';
 import 'package:guialeitura/models/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +100,6 @@ class _AuthPageState extends State<AuthPage> {
                     Card(
                       elevation: 6,
                       child: Container(
-                        // width:  deviceSize.size.width * percentSizeWidthForm(BuildContext, deviceSize),
                         padding: const EdgeInsets.all(10.0),
                         child: Form(
                           key: formKey,
