@@ -48,7 +48,7 @@ class _AuthPageState extends State<AuthPage> {
       if (!isLogin) {
         await auth.signup(emailController.text, senhaController.text);
       } else {
-        await auth.signin(emailController.text, senhaController.text);
+        await auth.signin('teste@gmail.com', '123456');
       }
     } on ExceptionAuth catch (error) {
       showErroDialog(error.toString());

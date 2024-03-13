@@ -19,6 +19,7 @@ class _CardLivrosState extends State<CardLivros> {
 
   @override
   initState() {
+    debugPrint('O código do livro éfdfjasdkfjak: ${widget.livro.codigo}');
     setState(() {
       meta = widget.livro.metaDia;
     });

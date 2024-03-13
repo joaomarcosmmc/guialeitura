@@ -15,6 +15,7 @@ class BdLivros extends ChangeNotifier {
   String url = Bd().urlBd;
   // Início método para Salvar/Atualizar os dados do livro.
   salvar(Livro livro) async {
+    debugPrint(livro.codigo);
     if (livro.codigo != null ) {
               http.patch(
           Uri.parse('$url/livros/${livro.codigo}.json?auth$_token'),
@@ -24,7 +25,7 @@ class BdLivros extends ChangeNotifier {
               'titulo': livro.titulo,
               'autor': livro.autor,
               'genero': livro.genero,
-             
+              'pagLidas': livro.pagLidas,
               'qtdPaginas': livro.qtdPaginas,
               'metaDia': livro.metaDia,
               'status': livro.status,
@@ -32,8 +33,8 @@ class BdLivros extends ChangeNotifier {
           ),
           
         );
-        getDados();
-        notifyListeners();
+ 
+  
     } else {
       _bdLivros.add(
         Livro(
@@ -55,16 +56,19 @@ class BdLivros extends ChangeNotifier {
           'titulo': livro.titulo,
           'autor': livro.autor,
           'genero': livro.genero,
-          'pagLidas': livro.pagLidas,
+          'pagLidas': 0,
           'qtdPaginas': livro.qtdPaginas,
           'metaDia': livro.metaDia,
           'status': livro.status,
         }),
       );
+
+    
     }
+    getDados();
     notifyListeners();
   }
-  // Início método para Salvar/Atualizar os dados do livro.
+  // Fim método para Salvar/Atualizar os dados do livro.
 
   Future<void> getDados() async {
     _bdLivros.clear();
@@ -77,6 +81,8 @@ class BdLivros extends ChangeNotifier {
 
       json.forEach(
         (codLivro, livro) {
+  
+       if (json[codLivro]['uid'] == _uid) { 
           _bdLivros.add(
             Livro(
               codigo: codLivro,
@@ -90,10 +96,11 @@ class BdLivros extends ChangeNotifier {
               status: livro['status'],
             ),
           );
-        },
+       }
+      notifyListeners();
+        }
       );
 
-      notifyListeners();
     } catch (e) {
       return;
     }

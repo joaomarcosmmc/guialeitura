@@ -41,7 +41,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
         metaDia:
             metaText.text.isEmpty ? 0 : int.parse(metaText.text),
         status: status,
-        pagLidas: 0,
+        pagLidas: int.parse(pagLidasText.text),
       
     ),
   );
@@ -50,13 +50,14 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
 
    
   Livro? _livro;
-    var codigo;
+    String? codigo;
     var tituloText = TextEditingController();
     var autorText = TextEditingController();
     var generoText = TextEditingController();
     var paginasText = TextEditingController();
     var metaText= TextEditingController();
     var statusText= TextEditingController();
+    var pagLidasText= TextEditingController();
   @override
   void initState() {
      super.initState();
@@ -66,22 +67,21 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
   @override
   void didChangeDependencies() {
    _livro = ModalRoute.of(context)!.settings.arguments as Livro;
-      codigo = _livro!.codigo;
       tituloText.text = _livro!.titulo;
       autorText.text = _livro!.autor;
       generoText.text = _livro!.genero;
       paginasText.text = _livro!.qtdPaginas.toString();
       metaText.text = _livro!.metaDia.toString();
       statusText.text = _livro!.status;
+      pagLidasText.text = _livro!.pagLidas.toString();
       
     super.didChangeDependencies();
+      codigo = _livro!.codigo.toString();
   }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
 
-   
-     
-
+   print(' O código do livro é: $codigo');
     var espaco = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -164,7 +164,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.4,
+                            width: MediaQuery.of(context).size.width * 0.6,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -226,38 +226,74 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 ),
                               ],
                             ),
+                          )],
                           ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Meta/Dia',
-                                  style: TextStyle(fontSize: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.40,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Meta/Dia',
+                                      style: TextStyle(fontSize: 15),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.40,
+                                      child: TextFormField(
+                                        initialValue: metaText.text,
+                                        onSaved: (value) =>
+                                          metaText.text = value.toString(),
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                            contentPadding: const EdgeInsets.all(10),
+                                            label: const Text('Ex: 10'),
+                                            floatingLabelBehavior:
+                                                FloatingLabelBehavior.never,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.40,
-                                  child: TextFormField(
-                                    initialValue: metaText.text,
-                                    onSaved: (value) =>
-                                      metaText.text = value.toString(),
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                        contentPadding: const EdgeInsets.all(10),
-                                        label: const Text('Ex: 10'),
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.never,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        )),
+                              ),
+                              const SizedBox(width: 20,),
+                              SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Pag Lidas',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.60,
+                                child: TextFormField(
+                                  initialValue: pagLidasText.text,
+                                  onSaved: (value) =>
+                                      pagLidasText.text = value.toString(),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(10),
+                                    label: const Text('Ex: 10'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                            ],
+                          ),
+                     
                       SizedBox(
                         height: 40,
                         child: Row(

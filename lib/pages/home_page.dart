@@ -4,7 +4,7 @@ import 'package:guialeitura/components/menu_lateral.dart';
 
 import 'package:guialeitura/components/modal_cadastro/modal_cadastro.dart';
 import 'package:guialeitura/dados/bd_livros.dart';
-import 'package:guialeitura/dados/auth.dart';
+
 import 'package:guialeitura/models/livro.dart';
 import 'package:provider/provider.dart';
 
@@ -67,7 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Livro> listagem = Provider.of<BdLivros>(context).bdLivros.where((element) => element.uid == Provider.of<Auth>(context).uid).toList();
+    List<Livro> listagem = Provider.of<BdLivros>(context).bdLivros;
+    //where((element) => element.uid == Provider.of<Auth>(context).uid).toList();
 
     return Scaffold(
       drawer: Drawer(
