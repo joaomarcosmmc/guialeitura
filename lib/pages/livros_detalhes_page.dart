@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:guialeitura/models/auth.dart';
+import 'package:guialeitura/dados/auth.dart';
+import 'package:guialeitura/dados/bd_livros.dart';
 
 import 'package:guialeitura/models/livro.dart';
 
@@ -28,9 +29,10 @@ final formKey = GlobalKey<FormState>();
 class _LivroDetalhepageState extends State<LivroDetalhePage> {
   salvar() {
     formKey.currentState!.validate();
-
-    
-      Livro(
+    formKey.currentState!.save();
+  Provider.of<BdLivros>(context, listen: false).salvar(
+    Livro(
+      codigo: codigo,
         uid: Provider.of<Auth>(context, listen: false).uid ?? '',
         titulo: tituloText.text,
         autor: autorText.text.isEmpty ? '-' : autorText.text,
@@ -41,13 +43,14 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
         status: status,
         pagLidas: 0,
       
-    );
-
-    Navigator.of(context).pop();
+    ),
+  );
+    
   }
 
    
   Livro? _livro;
+    var codigo;
     var tituloText = TextEditingController();
     var autorText = TextEditingController();
     var generoText = TextEditingController();
@@ -63,12 +66,14 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
   @override
   void didChangeDependencies() {
    _livro = ModalRoute.of(context)!.settings.arguments as Livro;
+      codigo = _livro!.codigo;
       tituloText.text = _livro!.titulo;
       autorText.text = _livro!.autor;
       generoText.text = _livro!.genero;
       paginasText.text = _livro!.qtdPaginas.toString();
       metaText.text = _livro!.metaDia.toString();
       statusText.text = _livro!.status;
+      
     super.didChangeDependencies();
   }
   @override
@@ -107,7 +112,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 ),
                                 TextFormField(
                                   initialValue: tituloText.text,
-                                  
+                                  onSaved: (value) =>  tituloText.text= value.toString(),
                                   validator: (value) {
                                     if (value!.length < 3) {
                                       return 'Digite pelo menos 3 caracteres';
@@ -138,6 +143,8 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 ),
                                 TextFormField(
                                   initialValue: autorText.text,
+                                  onSaved: (value) =>
+                                autorText.text = value.toString(),
                                   decoration: InputDecoration(
                                       contentPadding: const EdgeInsets.all(10),
                                       label: const Text('Ex: Dan Brown'),
@@ -167,6 +174,8 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 ),
                                 TextFormField(
                                   initialValue: generoText.text,
+                                  onSaved: (value) =>
+                                    generoText.text = value.toString(),
                                   decoration: InputDecoration(
                                       contentPadding: const EdgeInsets.all(10),
                                       label: const Text('Ex: Romance'),
@@ -192,6 +201,8 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                   width: MediaQuery.of(context).size.width * 0.40,
                                   child: TextFormField(
                                     initialValue: paginasText.text,
+                                    onSaved: (value) =>
+                                      paginasText.text = value.toString(),
                                     validator: (value) {
                                       if (value!.trim().isEmpty) {
                                         return 'Digite um valor!';
@@ -201,6 +212,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                         return null;
                                       }
                                     },
+                                    
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         contentPadding: const EdgeInsets.all(10),
@@ -228,6 +240,8 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                   width: MediaQuery.of(context).size.width * 0.40,
                                   child: TextFormField(
                                     initialValue: metaText.text,
+                                    onSaved: (value) =>
+                                      metaText.text = value.toString(),
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         contentPadding: const EdgeInsets.all(10),

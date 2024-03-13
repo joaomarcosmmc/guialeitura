@@ -23,7 +23,7 @@ class _ModalCadastroState extends State<ModalCadastro> {
   TextEditingController statusText = TextEditingController();
 
   void salvar(Livro livro){
-    Provider.of<BdLivros>(context, listen: false).addLivros(livro);
+    Provider.of<BdLivros>(context, listen: false).salvar(livro);
   }
   @override
   Widget build(BuildContext context) {

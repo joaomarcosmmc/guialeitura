@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:guialeitura/models/auth.dart';
+import 'package:guialeitura/dados/auth.dart';
 import 'package:provider/provider.dart';
 
 class MenuLateral extends StatelessWidget {
