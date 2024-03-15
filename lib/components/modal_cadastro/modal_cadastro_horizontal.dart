@@ -53,254 +53,256 @@ class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
   @override
   Widget build(BuildContext context) {
     var espaco = MediaQuery.of(context);
-    return Padding(
-      padding: EdgeInsets.only(
-          bottom: espaco.viewInsets.bottom, top: espaco.size.height * 0.05),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: espaco.size.width * 0.45,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                '*Título:',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              TextFormField(
-                                controller: widget.tituloText,
-                                validator: (value) {
-                                  if (value!.length < 3) {
-                                    return 'Digite pelo menos 3 caracteres';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.all(10),
-                                    label: const Text('Ex: O Código da Vinci'),
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: espaco.size.width * 0.45,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Autor(a):',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              TextFormField(
-                                controller: widget.autorText,
-                                decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.all(10),
-                                    label: const Text('Ex: Dan Brown'),
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                            const Text(
-                            'Gênero:',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          TextFormField(
-                            controller: widget.generoText,
-                            decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(10),
-                                label: const Text('Ex: Romance'),
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.never,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          ],),
-                        ),
-                        
-                     
-                        SizedBox(
-                           width: MediaQuery.of(context).size.width * 0.25,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                '*Páginas:',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width *
-                                    0.40,
-                                child: TextFormField(
-                                  controller: widget.paginasText,
+    return LayoutBuilder(
+      builder: (context, constraints) =>  Padding(
+        padding: EdgeInsets.only(
+            bottom: espaco.viewInsets.bottom, top: espaco.size.height * 0.05),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: constraints.maxWidth * 0.45,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  '*Título:',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                TextFormField(
+                                  controller: widget.tituloText,
                                   validator: (value) {
-                                    if (value!.trim().isEmpty) {
-                                      return 'Digite um valor!';
-                                    } else if (int.parse(value) < 1) {
-                                      return 'Digite um número válido';
+                                    if (value!.length < 3) {
+                                      return 'Digite pelo menos 3 caracteres';
                                     } else {
                                       return null;
                                     }
                                   },
-                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.all(10),
-                                      label: const Text('Ex: 432'),
+                                      contentPadding: const EdgeInsets.all(10),
+                                      label: const Text('Ex: O Código da Vinci'),
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.never,
                                       border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       )),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                           width: MediaQuery.of(context).size.width * 0.25,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                          SizedBox(
+                            width: constraints.maxWidth * 0.45,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Autor(a):',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                TextFormField(
+                                  controller: widget.autorText,
+                                  decoration: InputDecoration(
+                                      contentPadding: const EdgeInsets.all(10),
+                                      label: const Text('Ex: Dan Brown'),
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.never,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      const Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            width: constraints.maxWidth * 0.4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                               const Text(
-                                'Meta/Dia',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width *
-                                    0.40,
-                                child: TextFormField(
-                                  controller: widget.metaText,
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.all(10),
-                                      label: const Text('Ex: 10'),
-                                      floatingLabelBehavior:
-                                          FloatingLabelBehavior.never,
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10),
-                                      )),
-                                ),
-                              ),
-                            ],
+                              'Gênero:',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                            TextFormField(
+                              controller: widget.generoText,
+                              decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.all(10),
+                                  label: const Text('Ex: Romance'),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            ],),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: SizedBox(
-                                child: Row(
-                                  children: [
-                                    Radio(
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.values.last,
-                                      activeColor: Colors.amber,
-                                      value: 'lendo',
-                                      groupValue: status,
-                                      onChanged: (value) => setState(() {
-                                        status = 'lendo';
-                                      }),
-                                    ),
-                                    const Text('Lendo'),
-                                  ],
+                          
+                       
+                          SizedBox(
+                             width: constraints.maxWidth * 0.25,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  '*Páginas:',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                SizedBox(
+                                  width: constraints.maxWidth *
+                                      0.40,
+                                  child: TextFormField(
+                                    controller: widget.paginasText,
+                                    validator: (value) {
+                                      if (value!.trim().isEmpty) {
+                                        return 'Digite um valor!';
+                                      } else if (int.parse(value) < 1) {
+                                        return 'Digite um número válido';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.all(10),
+                                        label: const Text('Ex: 432'),
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.never,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                             width: constraints.maxWidth * 0.25,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Meta/Dia',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width *
+                                      0.40,
+                                  child: TextFormField(
+                                    controller: widget.metaText,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.all(10),
+                                        label: const Text('Ex: 10'),
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.never,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: SizedBox(
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.values.last,
+                                        activeColor: Colors.amber,
+                                        value: 'lendo',
+                                        groupValue: status,
+                                        onChanged: (value) => setState(() {
+                                          status = 'lendo';
+                                        }),
+                                      ),
+                                      const Text('Lendo'),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: SizedBox(
-                                child: Row(
-                                  children: [
-                                    Radio(
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.values.last,
-                                      activeColor: Colors.amber,
-                                      value: 'finalizado',
-                                      groupValue: status,
-                                      onChanged: (value) => setState(() {
-                                        status = 'finalizado';
-                                      }),
-                                    ),
-                                    const Text('Finalizado'),
-                                  ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: SizedBox(
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.values.last,
+                                        activeColor: Colors.amber,
+                                        value: 'finalizado',
+                                        groupValue: status,
+                                        onChanged: (value) => setState(() {
+                                          status = 'finalizado';
+                                        }),
+                                      ),
+                                      const Text('Finalizado'),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: SizedBox(
-                                child: Row(
-                                  children: [
-                                    Radio(
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.values.last,
-                                      activeColor: Colors.amber,
-                                      value: 'lista',
-                                      groupValue: status,
-                                      onChanged: (value) => setState(() {
-                                        status = 'lista';
-                                      }),
-                                    ),
-                                    const Text('Lista'),
-                                  ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: SizedBox(
+                                  child: Row(
+                                    children: [
+                                      Radio(
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.values.last,
+                                        activeColor: Colors.amber,
+                                        value: 'lista',
+                                        groupValue: status,
+                                        onChanged: (value) => setState(() {
+                                          status = 'lista';
+                                        }),
+                                      ),
+                                      const Text('Lista'),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ]),
-                    ),
-                    const Divider(),
-                    const Text(
-                      'Os campos marcados com (*) são de preenchimento obrigatório.',
-                      style: TextStyle(fontSize: 10),
-                    ),
-                    ElevatedButton(
-                        onPressed: salvar, child: const Text('Salvar'))
-                  ],
+                            ]),
+                      ),
+                      const Divider(),
+                      const Text(
+                        'Os campos marcados com (*) são de preenchimento obrigatório.',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                      ElevatedButton(
+                          onPressed: salvar, child: const Text('Salvar'))
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

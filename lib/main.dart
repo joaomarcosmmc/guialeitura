@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guialeitura/pages/livros_lidos.dart';
 import 'package:guialeitura/dados/bd_livros.dart';
 import 'package:guialeitura/dados/auth.dart';
 import 'package:guialeitura/pages/auth_or_home_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         routes: {
           RoutesPage().AUTH_OR_HOMEPAGE: (context) => const AuthOrHomePage(),
           RoutesPage().LIVRODETALHE: (context) => const LivroDetalhePage(),
+          RoutesPage().LIVROSLIDOS: (context) => const ListagemLivrosLidos(),
         },
       ),
     );

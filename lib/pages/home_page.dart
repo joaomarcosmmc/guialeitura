@@ -52,7 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context) => const ModalCadastro(),
     );
   }
- 
+
+
   bool isLoading = true;
   List<Livro> listagem = [];
 

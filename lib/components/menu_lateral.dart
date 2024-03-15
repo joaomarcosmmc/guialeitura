@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:guialeitura/dados/auth.dart';
+import 'package:guialeitura/utils/routes.dart';
 import 'package:provider/provider.dart';
 
 class MenuLateral extends StatelessWidget {
@@ -32,7 +33,11 @@ class MenuLateral extends StatelessWidget {
           const SizedBox(width: 20,),
           TextButton.icon(
             
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context)
+                    .pushNamed(RoutesPage().LIVROSLIDOS);
+              },
               icon: const Icon(Icons.verified_outlined, color: Colors.black,),
               label: const Text(
                 'Livros Lidos',style: TextStyle(color: Colors.black, fontSize: 20),

@@ -27,8 +27,8 @@ class _ModalCadastroState extends State<ModalCadastro> {
   }
   @override
   Widget build(BuildContext context) {
-    var isHorizonal =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    var isHorizonal = MediaQuery.of(context).size.width > 600; 
+        
     return isHorizonal
         ? ModalCadastroHorizontal(
             salvar: salvar,
