@@ -4,6 +4,7 @@ import 'package:guialeitura/components/menu_lateral.dart';
 
 import 'package:guialeitura/components/modal_cadastro/modal_cadastro.dart';
 import 'package:guialeitura/dados/bd_livros.dart';
+import 'package:guialeitura/models/livro.dart';
 
 
 import 'package:provider/provider.dart';
@@ -53,14 +54,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
  
   bool isLoading = true;
-    var listagem = [];
+  List<Livro> listagem = [];
 
   @override
   void initState() {
      Provider.of<BdLivros>(context, listen: false).getDados().then((value){
       setState(() {
+        listagem = [];
         isLoading = false;
-    listagem = [];
+    
       });
      }
     
@@ -70,7 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    listagem = Provider.of<BdLivros>(context).bdLivross;
+    listagem =[];
+     listagem = Provider.of<BdLivros>(context).bdLivros;
+      listagem.forEach((element) {
+        print('${element.titulo}    ${element.codigo}');
+      });
 
 
     return Scaffold(

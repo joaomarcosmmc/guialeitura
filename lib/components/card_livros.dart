@@ -57,6 +57,7 @@ class _CardLivrosState extends State<CardLivros> {
             children: [
               InkWell(
                 onTap: () {
+                  debugPrint('O código do livro quando chama a página de detalhes é: ${widget.livro.codigo}');
                   Navigator.of(context)
                       .pushNamed('/livroDetalhe', arguments: widget.livro.codigo);
                 },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 import 'package:guialeitura/dados/auth.dart';
 import 'package:guialeitura/dados/bd_livros.dart';
 
@@ -20,11 +21,13 @@ final formKey = GlobalKey<FormState>();
 
 class _LivroDetalhepageState extends State<LivroDetalhePage> {
   bool isLoad = false;
-  salvar() {
+  bool isDeleting = false;
+  salvar() async {
+    isLoad=true;
     formKey.currentState!.validate();
     formKey.currentState!.save();
 
-    Provider.of<BdLivros>(context, listen: false).salvar(
+    await Provider.of<BdLivros>(context, listen: false).salvar(
       Livro(
         codigo: codigoL,
         uid: Provider.of<Auth>(context, listen: false).uid ?? '',
@@ -35,8 +38,20 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
         metaDia: metaText.text.isEmpty ? 0 : int.parse(metaText.text),
         status: status,
         pagLidas: int.parse(pagLidasText.text),
-      ),
-    );
+      ) ,
+    ).then((value) =>setState(() {
+      isLoad =false;
+    }));
+  }
+
+  delete(){
+    isDeleting = true;
+    Provider.of<BdLivros>(context, listen: false).delete(codigoL!).then((value) {
+    setState(() {
+      isDeleting = false;
+    });
+    Navigator.of(context).pop();
+    });
   }
 
   String? codigoL;
@@ -54,12 +69,12 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
 
   @override
   void didChangeDependencies() {
-   var provider = Provider.of<BdLivros>(context, listen: false).bdLivros;
+    var provider = Provider.of<BdLivros>(context, listen: false).bdLivros;
     codigoL = ModalRoute.of(context)!.settings.arguments as String;
      livro = provider.where((element) => element.codigo == codigoL).reduce((value, element) => element);
 
 
-     tituloText.text = livro!.titulo;
+    tituloText.text = livro!.titulo;
     autorText.text = livro!.autor;
     generoText.text = livro!.genero;
     paginasText.text = livro!.qtdPaginas.toString();
@@ -85,24 +100,40 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
   }
 
   double percent(int qtdPagLida, int qtdPagTotal) {
+    
     return qtdPagLida / qtdPagTotal;
+
   }
 
   @override
   Widget build(BuildContext context) {
-   
 
  
     var espaco = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
+        centerTitle: true,
+        title: Text(livro!.titulo, style:const  TextStyle(fontFamily: 'HedvigLetter'),),
+        actions: [
+          IconButton(onPressed: delete, icon: const Icon(Icons.delete))
+        ],
       ),
-      body: LayoutBuilder(
+      body: 
+      isDeleting?
+      const Center(
+        child: CircularProgressIndicator(),
+      ):
+      LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
           child: Center(
-            child: Card(
-              elevation: 6,
+            child: Container(
+              margin:const  EdgeInsets.symmetric(vertical: 20),
+              decoration: BoxDecoration(
+                border:Border.all(width: 1, color: Colors.grey,
+                  ), 
+                borderRadius: BorderRadius.circular(5)
+              ),
               child: SizedBox(
                 width:
                     espaco.size.width * percentSizeWidthForm(context, espaco),
@@ -177,7 +208,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 ],
                               ),
                             ),
-                            const Divider(),
+                           
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -447,7 +478,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                       ),
                                     ),
                                   ),
-                                  Text('fsdf'),
+                                  Text('${livro!.qtdPaginas}'),
                                 ],
                               ),
                             ),
@@ -456,7 +487,8 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                               'Os campos marcados com (*) são de preenchimento obrigatório.',
                               style: TextStyle(fontSize: 10),
                             ),
-                            ElevatedButton(
+                            
+                            !isLoad? ElevatedButton(
                                 onPressed: () {
                                   setState(() {
                                     salvar();
@@ -464,7 +496,13 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 },
                                 child: isLoad
                                     ? const Text('Salvando')
-                                    : const Text('salvar'))
+                                    : const Text('salvar')):const Padding(
+
+                                      padding:  EdgeInsets.symmetric(vertical: 10),
+                                      child:  Center(
+                                          
+                                          child:  CircularProgressIndicator()),
+                                    )
                           ],
                         ),
                       ),
