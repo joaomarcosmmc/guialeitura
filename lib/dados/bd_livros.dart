@@ -7,16 +7,38 @@ import 'package:http/http.dart' as http;
 class BdLivros extends ChangeNotifier {
   final String? _token;
   final String? _uid;
-  final List<Livro> _bdLivros;
+   List<Livro> bdLivross;
 
-  BdLivros(this._token, this._uid, this._bdLivros);
+  BdLivros(this._token, this._uid, this.bdLivross);
 
-  List<Livro> get bdLivros => _bdLivros;
+  List<Livro> get bdLivros => bdLivross;
   String url = Bd().urlBd;
   // Início método para Salvar/Atualizar os dados do livro.
-  salvar(Livro livro) async {
+  Future<void> salvar(Livro livro) async {
     debugPrint(livro.codigo);
     if (livro.codigo != null ) {
+
+           bdLivros.forEach((element) {
+            if(element.codigo == livro.codigo){
+              
+               element.codigo = livro.codigo;
+               element.genero = livro.genero;
+               element.metaDia = livro.metaDia;
+               element.qtdPaginas = livro.qtdPaginas;
+               element.uid = livro.uid;
+               element.titulo = livro.titulo;
+               element.status = livro.status;
+               element.autor = livro.autor;
+               element.pagLidas = livro.pagLidas;
+               
+
+            debugPrint('################################################################');
+            debugPrint('A uqnatidade de páginas lidas é: ${element.pagLidas.toString()}');
+            debugPrint('################################################################');
+            }
+            notifyListeners();
+           });
+    
               http.patch(
           Uri.parse('$url/livros/${livro.codigo}.json?auth$_token'),
           body: jsonEncode(
@@ -36,7 +58,7 @@ class BdLivros extends ChangeNotifier {
  
   
     } else {
-      _bdLivros.add(
+      bdLivross.add(
         Livro(
           uid: livro.uid,
           titulo: livro.titulo,
@@ -65,13 +87,15 @@ class BdLivros extends ChangeNotifier {
 
     
     }
-    getDados();
+  
     notifyListeners();
+
   }
   // Fim método para Salvar/Atualizar os dados do livro.
 
   Future<void> getDados() async {
-    _bdLivros.clear();
+    bdLivross=[];
+    
 
     try {
       final response =
@@ -83,7 +107,7 @@ class BdLivros extends ChangeNotifier {
         (codLivro, livro) {
   
        if (json[codLivro]['uid'] == _uid) { 
-          _bdLivros.add(
+          bdLivross.add(
             Livro(
               codigo: codLivro,
               uid: livro['uid'],
@@ -129,5 +153,6 @@ class BdLivros extends ChangeNotifier {
     );
 
     notifyListeners();
+
   }
 }

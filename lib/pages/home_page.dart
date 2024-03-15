@@ -5,7 +5,7 @@ import 'package:guialeitura/components/menu_lateral.dart';
 import 'package:guialeitura/components/modal_cadastro/modal_cadastro.dart';
 import 'package:guialeitura/dados/bd_livros.dart';
 
-import 'package:guialeitura/models/livro.dart';
+
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -53,22 +53,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
  
   bool isLoading = true;
+    var listagem = [];
 
   @override
   void initState() {
      Provider.of<BdLivros>(context, listen: false).getDados().then((value){
       setState(() {
         isLoading = false;
+    listagem = [];
       });
      }
+    
     );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Livro> listagem = Provider.of<BdLivros>(context).bdLivros;
-    //where((element) => element.uid == Provider.of<Auth>(context).uid).toList();
+    listagem = Provider.of<BdLivros>(context).bdLivross;
+
 
     return Scaffold(
       drawer: Drawer(

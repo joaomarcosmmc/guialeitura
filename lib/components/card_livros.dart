@@ -44,133 +44,132 @@ class _CardLivrosState extends State<CardLivros> {
     }
     var dtPrev = dt.add(Duration(days: prev));
     return LayoutBuilder(
-
       builder: (_, constraints) => Container(
         decoration: BoxDecoration(
           border: Border.all(width: 1),
           borderRadius: BorderRadius.circular(20),
-       color: const Color.fromARGB(255, 243, 243, 243),
+          color: const Color.fromARGB(255, 243, 243, 243),
         ),
-       
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                
                 onTap: () {
-                  Navigator.of(context).pushNamed('/livroDetalhe', arguments: widget.livro);
+                  Navigator.of(context)
+                      .pushNamed('/livroDetalhe', arguments: widget.livro.codigo);
                 },
                 child: Column(children: [
                   ListTile(
-                  title: Text(
-                    widget.livro.titulo,
-                    style: const TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'HedvigLetter'),
-                  ),
-                  subtitle: Text(widget.livro.autor),
-                  trailing: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4.5),
-                    alignment: Alignment.center,
-                    width: 60,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: Colors.amber[200],
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          '${(percent(widget.livro.pagLidas, widget.livro.qtdPaginas) * 100).toStringAsFixed(0)}%',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Text(
-                          'Concluído',
-                          style: TextStyle(fontSize: 12),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Previsão:',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'HedvigLetter'),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        prev == 0
-                            ? const Text('---')
-                            : Text(
-                                DateFormat('dd/MM/yyy').format(dtPrev),
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'HedvigLetter'),
-                              ),
-                      ],
-                    ),
-                    Text(
-                      '${widget.livro.pagLidas} Pag. Lidas',
-                      textAlign: TextAlign.left,
+                    title: Text(
+                      widget.livro.titulo,
                       style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 23,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'HedvigLetter'),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text('0'),
-                      Container(
-                        height: 15,
-                        width: constraints.minWidth * 0.8,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1),
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: FractionallySizedBox(
-                          widthFactor: (widget.livro.pagLidas == 0
-                              ? 0
-                              : percent(widget.livro.pagLidas,
-                                  widget.livro.qtdPaginas)),
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            height: 15,
-                            width: constraints.minWidth * 0.8,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(20)),
+                    subtitle: Text(widget.livro.autor),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 4.5),
+                      alignment: Alignment.center,
+                      width: 60,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.amber[200],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            '${(percent(widget.livro.pagLidas, widget.livro.qtdPaginas) * 100).toStringAsFixed(0)}%',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                          const Text(
+                            'Concluído',
+                            style: TextStyle(fontSize: 12),
+                          )
+                        ],
                       ),
-                      Text(widget.livro.qtdPaginas.toString()),
+                    ),
+                  ),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            'Previsão:',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'HedvigLetter'),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          prev == 0
+                              ? const Text('---')
+                              : Text(
+                                  DateFormat('dd/MM/yyy').format(dtPrev),
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'HedvigLetter'),
+                                ),
+                        ],
+                      ),
+                      Text(
+                        '${widget.livro.pagLidas} Pag. Lidas',
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'HedvigLetter'),
+                      ),
                     ],
                   ),
-                ),]),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Text('0'),
+                        Container(
+                          height: 15,
+                          width: constraints.minWidth * 0.8,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1),
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: FractionallySizedBox(
+                            widthFactor: (widget.livro.pagLidas == 0
+                                ? 0
+                                : percent(widget.livro.pagLidas,
+                                    widget.livro.qtdPaginas)),
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              height: 15,
+                              width: constraints.minWidth * 0.8,
+                              decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(20)),
+                            ),
+                          ),
+                        ),
+                        Text(widget.livro.qtdPaginas.toString()),
+                      ],
+                    ),
+                  ),
+                ]),
               ),
               const Divider(),
               Row(

@@ -59,7 +59,7 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   var obscureText = true;
-  double percentSizeWidthForm(context, MediaQueryData deviceSize) {
+  double percentSizeWidthForm(context, deviceSize) {
     if (deviceSize.size.width < 450) {
       return 0.95;
     } else if (deviceSize.size.width < 600) {
