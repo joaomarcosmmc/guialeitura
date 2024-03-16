@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:guialeitura/dados/auth.dart';
-import 'package:guialeitura/utils/routes.dart';
+import 'package:guialeitura/pages/home_page.dart';
+import 'package:guialeitura/pages/livros_lidos.dart';
+
 import 'package:provider/provider.dart';
 
 class MenuLateral extends StatelessWidget {
@@ -12,9 +13,9 @@ class MenuLateral extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Container(
+          Container(
             color: Colors.amber,
             height: 80,
             width: double.infinity,
@@ -30,58 +31,88 @@ class MenuLateral extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 20,),
+       
+          const SizedBox(
+            height: 5,
+          ),
           TextButton.icon(
-            
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context)
-                    .pushNamed(RoutesPage().LIVROSLIDOS);
-              },
-              icon: const Icon(Icons.verified_outlined, color: Colors.black,),
-              label: const Text(
-                'Livros Lidos',style: TextStyle(color: Colors.black, fontSize: 20),
-              )),
-              const Divider(),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (_) => const MyHomePage(),
+              ));
+            },
+            icon: const Icon(
+              Icons.home,
+              color: Colors.black,
+            ),
+            label: const Text(
+              'Início',
+              style: TextStyle(color: Colors.black, fontSize: 20),
+            ),
+          ),
+          const Divider(),
+        
+          TextButton.icon(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (_) => const ListagemLivrosLidos(),
+              ));
+            },
+            icon: const Icon(
+              Icons.verified_outlined,
+              color: Colors.black,
+            ),
+            label: const Text(
+              'Livros Lidos',
+              style: TextStyle(color: Colors.black, fontSize: 20),
+            ),
+          ),
+          const Divider(),
           TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.list_alt, color: Colors.black),
-              label: const Text('lista de livros',style:TextStyle(color:Colors.black, fontSize: 20))),
-              const Divider(),
+              label: const Text('lista de livros',
+                  style: TextStyle(color: Colors.black, fontSize: 20))),
+          const Divider(),
           TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.bar_chart_outlined, color: Colors.black),
-              label: const Text('Estatística',style:TextStyle(color:Colors.black, fontSize: 20))),
-              const Divider(),
+              label: const Text('Estatística',
+                  style: TextStyle(color: Colors.black, fontSize: 20))),
+          const Divider(),
           TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.emoji_events_rounded, color: Colors.black),
-              label: const Text('Desafio',style:TextStyle(color:Colors.black, fontSize: 20))),
-              const Divider(),
+              label: const Text('Desafio',
+                  style: TextStyle(color: Colors.black, fontSize: 20))),
+          const Divider(),
           TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.timer_sharp, color: Colors.black),
-              label: const Text('Recorde',style:TextStyle(color:Colors.black, fontSize: 20))),
-              const Divider(),
+              label: const Text('Recorde',
+                  style: TextStyle(color: Colors.black, fontSize: 20))),
+          const Divider(),
           TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.ad_units_sharp, color: Colors.black),
-              label: const Text('Geral',style:TextStyle(color:Colors.black, fontSize: 20))),
-              const Divider(),
-              TextButton.icon(
+              label: const Text('Geral',
+                  style: TextStyle(color: Colors.black, fontSize: 20))),
+          const Divider(),
+          TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.info_outline, color: Colors.black),
               label: const Text('Sobre',
                   style: TextStyle(color: Colors.black, fontSize: 20))),
           const Divider(),
           const Spacer(),
-              const Divider(),
+          const Divider(),
           TextButton.icon(
               onPressed: () {
                 Provider.of<Auth>(context, listen: false).logOut();
               },
               icon: const Icon(Icons.logout_rounded, color: Colors.black),
-              label: const Text('Sair',style:TextStyle(color:Colors.black, fontSize: 20))),
+              label: const Text('Sair',
+                  style: TextStyle(color: Colors.black, fontSize: 20))),
         ],
       ),
     );

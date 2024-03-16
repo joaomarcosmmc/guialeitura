@@ -153,7 +153,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 children: [
                                   const Text(
                                     '*Título:',
-                                    style: TextStyle(fontSize: 15),
+                                    style: TextStyle(fontSize: 18),
                                   ),
                                   TextFormField(
                                     initialValue: tituloText.text,
@@ -188,7 +188,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                 children: [
                                   const Text(
                                     'Autor(a):',
-                                    style: TextStyle(fontSize: 15),
+                                    style: TextStyle(fontSize: 18),
                                   ),
                                   TextFormField(
                                     initialValue: autorText.text,
@@ -216,14 +216,14 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                   width: (MediaQuery.of(context).size.width *
                                           percentSizeWidthForm(
                                               context, espaco)) *
-                                      0.30,
+                                      0.50,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         'Gênero:',
-                                        style: TextStyle(fontSize: 15),
+                                        style: TextStyle(fontSize: 18),
                                       ),
                                       TextFormField(
                                         initialValue: generoText.text,
@@ -250,7 +250,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                     children: [
                                       const Text(
                                         '*Páginas:',
-                                        style: TextStyle(fontSize: 15),
+                                        style: TextStyle(fontSize: 18),
                                       ),
                                       SizedBox(
                                         width:
@@ -299,7 +299,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                     children: [
                                       const Text(
                                         'Meta/Dia',
-                                        style: TextStyle(fontSize: 15),
+                                        style: TextStyle(fontSize: 18),
                                       ),
                                       SizedBox(
                                         width:
@@ -335,7 +335,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
                                     children: [
                                       const Text(
                                         'Pag Lidas',
-                                        style: TextStyle(fontSize: 15),
+                                        style: TextStyle(fontSize: 18),
                                       ),
                                       SizedBox(
                                         width:

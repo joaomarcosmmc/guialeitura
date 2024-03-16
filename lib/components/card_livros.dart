@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guialeitura/components/statusLivro.dart';
 
 import 'package:guialeitura/dados/bd_livros.dart';
 import 'package:guialeitura/models/livro.dart';
@@ -27,11 +28,10 @@ class _CardLivrosState extends State<CardLivros> {
     super.initState();
   }
 
-  double percent(int qtdPagLida, int qtdPagTotal) {
-    return qtdPagLida / qtdPagTotal;
-  }
 
   int prev = 0;
+
+
   @override
   Widget build(BuildContext context) {
     if (widget.livro.metaDia.toString().isNotEmpty &&
@@ -48,7 +48,7 @@ class _CardLivrosState extends State<CardLivros> {
         decoration: BoxDecoration(
           border: Border.all(width: 1),
           borderRadius: BorderRadius.circular(20),
-          color: const Color.fromARGB(255, 243, 243, 243),
+          color: Colors.grey[100],
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
@@ -71,33 +71,7 @@ class _CardLivrosState extends State<CardLivros> {
                           fontFamily: 'HedvigLetter'),
                     ),
                     subtitle: Text(widget.livro.autor),
-                    trailing: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 4.5),
-                      alignment: Alignment.center,
-                      width: 60,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.amber[200],
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            '${(percent(widget.livro.pagLidas, widget.livro.qtdPaginas) * 100).toStringAsFixed(0)}%',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Text(
-                            'Concluído',
-                            style: TextStyle(fontSize: 12),
-                          )
-                        ],
-                      ),
-                    ),
+                    trailing: StatusLivro(livro: widget.livro,)
                   ),
                   const Divider(),
                   Row(
@@ -154,7 +128,7 @@ class _CardLivrosState extends State<CardLivros> {
                           child: FractionallySizedBox(
                             widthFactor: (widget.livro.pagLidas == 0
                                 ? 0
-                                : percent(widget.livro.pagLidas,
+                                : StatusLivro(livro: widget.livro,).percent(widget.livro.pagLidas,
                                     widget.livro.qtdPaginas)),
                             alignment: Alignment.centerLeft,
                             child: Container(
@@ -229,3 +203,21 @@ class _CardLivrosState extends State<CardLivros> {
     );
   }
 }
+
+// Column(
+//                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                         children: [
+//                           Text(
+//                             '${(percent(widget.livro.pagLidas, widget.livro.qtdPaginas) * 100).toStringAsFixed(0)}%',
+//                             textAlign: TextAlign.center,
+//                             style: const TextStyle(
+//                               fontSize: 15,
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                           const Text(
+//                             'Concluído',
+//                             style: TextStyle(fontSize: 12),
+//                           )
+//                         ],
+//                       ),
