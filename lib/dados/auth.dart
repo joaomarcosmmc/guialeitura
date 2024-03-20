@@ -73,6 +73,7 @@ class Auth extends ChangeNotifier {
   }
   void logOut() {
     _token = null;
+    print(_token);
     notifyListeners();
   }
 }

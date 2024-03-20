@@ -15,13 +15,13 @@ class LivroDetalhePage extends StatefulWidget {
   State<LivroDetalhePage> createState() => _LivroDetalhepageState();
 }
 
-String status = 'lendo';
 
 final formKey = GlobalKey<FormState>();
 
 class _LivroDetalhepageState extends State<LivroDetalhePage> {
   bool isLoad = false;
   bool isDeleting = false;
+  String status = '';
   salvar() async {
     isLoad=true;
     formKey.currentState!.validate();
@@ -82,6 +82,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
     statusText.text = livro!.status;
     pagLidasText.text = livro!.pagLidas.toString();
 
+   status = livro!.status;
     
     super.didChangeDependencies();
 

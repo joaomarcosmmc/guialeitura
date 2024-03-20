@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guialeitura/dados/auth.dart';
 import 'package:guialeitura/pages/home_page.dart';
+import 'package:guialeitura/pages/leitura_futura.dart';
 import 'package:guialeitura/pages/livros_lidos.dart';
-
 import 'package:provider/provider.dart';
 
 class MenuLateral extends StatelessWidget {
@@ -31,7 +31,6 @@ class MenuLateral extends StatelessWidget {
               ),
             ),
           ),
-       
           const SizedBox(
             height: 5,
           ),
@@ -51,7 +50,6 @@ class MenuLateral extends StatelessWidget {
             ),
           ),
           const Divider(),
-        
           TextButton.icon(
             onPressed: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -69,7 +67,11 @@ class MenuLateral extends StatelessWidget {
           ),
           const Divider(),
           TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (_) => const ListagemLeituraFutura(),
+                ));
+              },
               icon: const Icon(Icons.list_alt, color: Colors.black),
               label: const Text('lista de livros',
                   style: TextStyle(color: Colors.black, fontSize: 20))),

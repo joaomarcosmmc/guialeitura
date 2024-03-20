@@ -31,9 +31,20 @@ String status = 'lendo';
 final formKey = GlobalKey<FormState>();
 
 class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
+  // int paginasLidas = 0;
   salvar() {
+    debugPrint('O status é: $status');
+    debugPrint('O numero de páginas é: ${widget.paginasText.text}');
     formKey.currentState!.validate();
-
+    // if(status == 'finalizado'){
+    //   setState(() {
+    //     paginasLidas = int.parse(widget.paginasText.text);
+    //   });
+    // }else {
+    //  setState(() {
+    //   paginasLidas = 0;
+    //  });
+    // }
     widget.salvar(
       Livro(
         uid: Provider.of<Auth>(context,listen: false).uid??'',
@@ -43,7 +54,7 @@ class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
         qtdPaginas: int.parse(widget.paginasText.text),
         metaDia: widget.metaText.text.isEmpty ? 0 : int.parse(widget.metaText.text),
         status: status,
-        pagLidas: 0,
+        pagLidas: status == 'finalizado'? int.parse(widget.paginasText.text): 0,
       ),
     );
  
@@ -297,7 +308,7 @@ class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
                         style: TextStyle(fontSize: 10),
                       ),
                       ElevatedButton(
-                          onPressed: salvar, child: const Text('Salvar'))
+                          onPressed: salvar(), child: const Text('Salvar'))
                     ],
                   ),
                 ),

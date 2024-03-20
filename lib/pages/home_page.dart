@@ -16,29 +16,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 var appBar = AppBar(
-  leading: Builder(
-    builder: (context) => IconButton(
-        onPressed: () {
-          Scaffold.of(context).openDrawer();
-        },
-        icon: const Icon(
-          Icons.menu,
-          color: Colors.black,
-          size: 30,
-        )),
-  ),
-  centerTitle: false,
-  title: const Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children:  [
-      Text(
-        'Guia de Leitura',
-        style: TextStyle(
-            color: Colors.black, fontFamily: 'HedvigLetter', fontSize: 26),
-        textAlign: TextAlign.right,
-      ),
-     
-    ],
+ 
+  
+  title: const Text(
+    'Guia de Leitura',
+    style: TextStyle(
+        color: Colors.black, fontFamily: 'HedvigLetter', fontSize: 26),
+    textAlign: TextAlign.right,
   ),
   elevation: 0,
   backgroundColor: Colors.amber,
@@ -75,9 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     listagem =[];
      listagem = Provider.of<BdLivros>(context).bdLivros;
-      listagem.forEach((element) {
-        print('${element.titulo}    ${element.codigo}');
-      });
+   
 
 
     return Scaffold(
@@ -95,8 +77,26 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),): 
        listagem.isEmpty || listagem.toString() == '[]'
-          ? const Center(
-              child: Text('Nenhum Livro cadastrado'),
+          ?  Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                        'Nenhum livro cadastrado.',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Icon(
+                        Icons.error_outline,
+                        size: 150,
+                        color: Colors.grey[400],
+                      )
+                  
+                ],
+              ),
             )
           : Padding(
               padding: const EdgeInsets.all(8.0),

@@ -31,9 +31,10 @@ String status = 'lendo';
 final formKey = GlobalKey<FormState>();
 
 class _ModalCadastroVerticalState extends State<ModalCadastroVertical> {
+
   salvar() {
     formKey.currentState!.validate();
-
+   
     widget.salvar(
       Livro(
         uid: Provider.of<Auth>(context, listen: false).uid??'',
@@ -43,7 +44,7 @@ class _ModalCadastroVerticalState extends State<ModalCadastroVertical> {
         qtdPaginas: int.parse(widget.paginasText.text),
         metaDia: widget.metaText.text.isEmpty ? 0 : int.parse(widget.metaText.text),
         status: status,
-        pagLidas: 0,
+        pagLidas: status == 'finalizado'? int.parse(widget.paginasText.text): 0,
       ),
     );
    
@@ -167,6 +168,7 @@ class _ModalCadastroVerticalState extends State<ModalCadastroVertical> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.40,
                                 child: TextFormField(
+                                  enabled: status == 'lendo'? true: false,
                                   controller: widget.metaText,
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
@@ -221,6 +223,7 @@ class _ModalCadastroVerticalState extends State<ModalCadastroVertical> {
                                       value: 'finalizado',
                                       groupValue: status,
                                       onChanged: (value) => setState(() {
+                                         widget.metaText.text = '';
                                         status = 'finalizado';
                                       }),
                                     ),
@@ -241,6 +244,7 @@ class _ModalCadastroVerticalState extends State<ModalCadastroVertical> {
                                       value: 'lista',
                                       groupValue: status,
                                       onChanged: (value) => setState(() {
+                                        widget.metaText.text = '';
                                         status = 'lista';
                                       }),
                                     ),

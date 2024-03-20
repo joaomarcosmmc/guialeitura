@@ -19,7 +19,7 @@ class BdLivros extends ChangeNotifier {
   // INICIO DO MÉTODO SALVAR/ALTERAR LIVRO.
   //---------------------------------------
   Future<void> salvar(Livro livro) async {
-  
+    
     if (livro.codigo != null) { // caso o codigo do livro seja não nulo, então entra no laço FOR.
       /*Neste caso usamos uma lista que é constituida pelos dados do banco, mas essa alteração
       ainda não afeta o banco, ela tem o objetivo de agilizar o funcionamento do aplicativo.*/
@@ -68,7 +68,7 @@ class BdLivros extends ChangeNotifier {
           'titulo': livro.titulo,
           'autor': livro.autor,
           'genero': livro.genero,
-          'pagLidas': 0,
+          'pagLidas': livro.pagLidas,
           'qtdPaginas': livro.qtdPaginas,
           'metaDia': livro.metaDia,
           'status': livro.status,
@@ -86,7 +86,7 @@ class BdLivros extends ChangeNotifier {
             qtdPaginas: livro.qtdPaginas,
             metaDia: livro.metaDia,
             status: livro.status,
-            pagLidas: 0,
+            pagLidas: livro.pagLidas,
           ),
         );
       });
