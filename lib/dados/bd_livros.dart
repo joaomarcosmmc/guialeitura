@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:guialeitura/dados/bd.dart';
 import 'package:guialeitura/models/livro.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +34,7 @@ class BdLivros extends ChangeNotifier {
           element.qtdPaginas = livro.qtdPaginas;
           element.uid = livro.uid;
           element.titulo = livro.titulo;
-          element.status = livro.status;
+          element.status = livro.qtdPaginas == livro.pagLidas? 'finalizado':'lendo';
           element.autor = livro.autor;
           element.pagLidas = livro.pagLidas;
         }
@@ -52,7 +53,7 @@ class BdLivros extends ChangeNotifier {
             'pagLidas': livro.pagLidas,
             'qtdPaginas': livro.qtdPaginas,
             'metaDia': livro.metaDia,
-            'status': livro.status,
+            'status': livro.qtdPaginas == livro.pagLidas ? 'finalizado' : 'lendo',
           },
         ),
       );
@@ -129,6 +130,16 @@ class BdLivros extends ChangeNotifier {
       return;
     }
   }
+  showDialogMensage(BuildContext context){
+    showDialog(context: context, builder: (context) {
+
+        return AlertDialog(
+          actions: [ElevatedButton(onPressed: () => Navigator.of(context).pop() , child: const Text('Fechar'))],
+          title: const Text('Parabéns!'),
+          content: const Text('Você conclui a leitura deste livro!'),
+        );
+    },);
+  }
 
   Future<void> delete(String cod)async{
     await http.delete(
@@ -139,27 +150,36 @@ class BdLivros extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addPagLida(int? qtd, Livro livro) async {
+  Future<void> addPagLida(BuildContext context, int? qtd, Livro livro) async {
+    String status = '';
     var pagL = 0;
-
     for (var element in bdLivros) {
       
       if (element.codigo == livro.codigo && element.uid == _uid) {
         if ((element.pagLidas + qtd!) >= element.qtdPaginas) {
           pagL = element.qtdPaginas;
+          status = 'finalizado';
           element.pagLidas = pagL;
+          element.status = 'finalizado';
+          showDialogMensage(context);
         } else {
           pagL = element.pagLidas + qtd;
           element.pagLidas = pagL;
+          status = 'lendo';
+          element.status = 'lendo';
+
         }
       }
+      notifyListeners();
     }
  
 
     await http.patch(
       Uri.parse('$url/livros/${livro.codigo}.json?auth$_token'),
       body: jsonEncode(
-        {'pagLidas': pagL},
+        {'pagLidas': pagL,
+        'status': status
+        },
       ),
     );
 

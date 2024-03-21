@@ -23,6 +23,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
   bool isDeleting = false;
   String status = '';
   salvar() async {
+   
     isLoad=true;
     formKey.currentState!.validate();
     formKey.currentState!.save();
@@ -36,11 +37,12 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
         genero: generoText.text.isEmpty ? '-' : generoText.text,
         qtdPaginas: int.parse(paginasText.text),
         metaDia: metaText.text.isEmpty ? 0 : int.parse(metaText.text),
-        status: status,
+        status: livro!.qtdPaginas == livro!.pagLidas ? 'finalizado' : 'lendo',
         pagLidas: int.parse(pagLidasText.text),
       ) ,
     ).then((value) =>setState(() {
       isLoad =false;
+      status = livro!.qtdPaginas == livro!.pagLidas? 'finalizado':'lendo';
     }));
   }
 
@@ -82,7 +84,7 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
     statusText.text = livro!.status;
     pagLidasText.text = livro!.pagLidas.toString();
 
-   status = livro!.status;
+    status = livro!.qtdPaginas == livro!.pagLidas ? 'finalizado' : 'lendo';
     
     super.didChangeDependencies();
 

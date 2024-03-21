@@ -188,7 +188,7 @@ class _CardLivrosState extends State<CardLivros> {
                     onPressed: () {
                       setState(() {
                         Provider.of<BdLivros>(context, listen: false)
-                            .addPagLida(meta, widget.livro);
+                            .addPagLida(context, meta, widget.livro);
                         meta = widget.livro.metaDia;
                       });
                     },
@@ -204,20 +204,3 @@ class _CardLivrosState extends State<CardLivros> {
   }
 }
 
-// Column(
-//                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                         children: [
-//                           Text(
-//                             '${(percent(widget.livro.pagLidas, widget.livro.qtdPaginas) * 100).toStringAsFixed(0)}%',
-//                             textAlign: TextAlign.center,
-//                             style: const TextStyle(
-//                               fontSize: 15,
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
-//                           const Text(
-//                             'Concluído',
-//                             style: TextStyle(fontSize: 12),
-//                           )
-//                         ],
-//                       ),
