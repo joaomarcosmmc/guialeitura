@@ -185,13 +185,14 @@ class _CardLivrosState extends State<CardLivros> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    
+                    onPressed: widget.livro.pagLidas < widget.livro.qtdPaginas? () {
                       setState(() {
                         Provider.of<BdLivros>(context, listen: false)
                             .addPagLida(context, meta, widget.livro);
                         meta = widget.livro.metaDia;
                       });
-                    },
+                    }:null,
                     child: const Text('+ Pág. Lidas'),
                   ),
                 ],

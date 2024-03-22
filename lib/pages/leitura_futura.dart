@@ -27,20 +27,23 @@ class ListagemLeituraFutura extends StatelessWidget {
         ),
       ),
       body: listagem.isEmpty
-          ?  Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text('Ainda não há nenhum livro em futuras leituras.', style: TextStyle(fontSize: 20,), textAlign: TextAlign.center,),
-                  Icon(
-                    Icons.error_outline,
-                    size: 150,
-                    color: Colors.grey[400],
-                  )
-                ],
+          ?  Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text('Ainda não há nenhum livro cadastrado em futuras leituras.', style: TextStyle(fontSize: 20,), textAlign: TextAlign.center,),
+                    Icon(
+                      Icons.error_outline,
+                      size: 150,
+                      color: Colors.grey[400],
+                    )
+                  ],
+                ),
               ),
-            )
+          )
           : SizedBox(
               child: ListView.builder(
                 itemCount: listagem.length,

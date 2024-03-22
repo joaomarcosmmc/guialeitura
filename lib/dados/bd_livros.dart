@@ -15,18 +15,19 @@ class BdLivros extends ChangeNotifier {
   List<Livro> get bdLivros => _bdLivros;
   String url = Bd().urlBd;
 
-
   //---------------------------------------
   // INICIO DO MÉTODO SALVAR/ALTERAR LIVRO.
   //---------------------------------------
   Future<void> salvar(Livro livro) async {
-    
-    if (livro.codigo != null) { // caso o codigo do livro seja não nulo, então entra no laço FOR.
+    if (livro.codigo != null) {
+      // caso o codigo do livro seja não nulo, então entra no laço FOR.
       /*Neste caso usamos uma lista que é constituida pelos dados do banco, mas essa alteração
       ainda não afeta o banco, ela tem o objetivo de agilizar o funcionamento do aplicativo.*/
-      
-      for (var element in bdLivros) { // Aqui ele irá percorrer toda lista BdLivros.
-        if (element.codigo == livro.codigo) {//Buscando pelo livro que está sendo alterado.
+
+      for (var element in bdLivros) {
+        // Aqui ele irá percorrer toda lista BdLivros.
+        if (element.codigo == livro.codigo) {
+          //Buscando pelo livro que está sendo alterado.
           //Quando encontrar o livro, os dados antigos serão substituidos pelo novos dados.
           element.codigo = livro.codigo;
           element.genero = livro.genero;
@@ -34,15 +35,16 @@ class BdLivros extends ChangeNotifier {
           element.qtdPaginas = livro.qtdPaginas;
           element.uid = livro.uid;
           element.titulo = livro.titulo;
-          element.status = livro.qtdPaginas == livro.pagLidas? 'finalizado':'lendo';
+          element.status =
+              livro.qtdPaginas == livro.pagLidas ? 'finalizado' : 'lendo';
           element.autor = livro.autor;
           element.pagLidas = livro.pagLidas;
         }
       }
       notifyListeners();
-      
+
       /*Agora sim, inicia a perssistencia no banco de dados.*/
-     await http.patch(
+      await http.patch(
         Uri.parse('$url/livros/${livro.codigo}.json?auth$_token'),
         body: jsonEncode(
           {
@@ -53,16 +55,19 @@ class BdLivros extends ChangeNotifier {
             'pagLidas': livro.pagLidas,
             'qtdPaginas': livro.qtdPaginas,
             'metaDia': livro.metaDia,
-            'status': livro.qtdPaginas == livro.pagLidas ? 'finalizado' : 'lendo',
+            'status':
+                livro.qtdPaginas == livro.pagLidas ? 'finalizado' : 'lendo',
           },
         ),
       );
-    } else { // caso o código do livro seja Nulo, ele irá salvar os dados criando um novo registro.
+    } else {
+      // caso o código do livro seja Nulo, ele irá salvar os dados criando um novo registro.
       /* Como aconteceu na sessão anterior, os dados serão salvos primeiro na lista bdLivros,
       não fazendo alteração no banco de dados. */
-      
+
       /*agora sim inicia a perssistencia no banco de dados.*/
-      await http.post(
+      await http
+          .post(
         Uri.parse('$url/livros.json?auth=$_token'),
         body: jsonEncode({
           'uid': livro.uid,
@@ -74,10 +79,11 @@ class BdLivros extends ChangeNotifier {
           'metaDia': livro.metaDia,
           'status': livro.status,
         }),
-      ).then((value) {
-        var cod = jsonDecode(value.body); 
-        
-         bdLivros.add(
+      )
+          .then((value) {
+        var cod = jsonDecode(value.body);
+
+        bdLivros.add(
           Livro(
             codigo: cod['name'],
             uid: livro.uid,
@@ -100,9 +106,8 @@ class BdLivros extends ChangeNotifier {
   //-------------------------------------
 
   Future<void> getDados() async {
- 
     _bdLivros.clear();
-      try {
+    try {
       final response =
           await http.get(Uri.parse('$url/livros.json?auth=$_token'));
       debugPrint(response.toString());
@@ -130,23 +135,31 @@ class BdLivros extends ChangeNotifier {
       return;
     }
   }
-  showDialogMensage(BuildContext context){
-    showDialog(context: context, builder: (context) {
 
+  showDialogMensage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
         return AlertDialog(
-          actions: [ElevatedButton(onPressed: () => Navigator.of(context).pop() , child: const Text('Fechar'))],
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Fechar'),
+            ),
+          ],
           title: const Text('Parabéns!'),
           content: const Text('Você conclui a leitura deste livro!'),
         );
-    },);
+      },
+    );
   }
 
-  Future<void> delete(String cod)async{
-    await http.delete(
-      Uri.parse('$url/livros/$cod.json?auth$_token'),
-    ).then((value) => 
-    bdLivros.removeWhere((livro) => livro.codigo == cod)
-    );
+  Future<void> delete(String cod) async {
+    await http
+        .delete(
+          Uri.parse('$url/livros/$cod.json?auth$_token'),
+        )
+        .then((value) => bdLivros.removeWhere((livro) => livro.codigo == cod));
     notifyListeners();
   }
 
@@ -154,7 +167,6 @@ class BdLivros extends ChangeNotifier {
     String status = '';
     var pagL = 0;
     for (var element in bdLivros) {
-      
       if (element.codigo == livro.codigo && element.uid == _uid) {
         if ((element.pagLidas + qtd!) >= element.qtdPaginas) {
           pagL = element.qtdPaginas;
@@ -167,19 +179,15 @@ class BdLivros extends ChangeNotifier {
           element.pagLidas = pagL;
           status = 'lendo';
           element.status = 'lendo';
-
         }
       }
       notifyListeners();
     }
- 
 
     await http.patch(
       Uri.parse('$url/livros/${livro.codigo}.json?auth$_token'),
       body: jsonEncode(
-        {'pagLidas': pagL,
-        'status': status
-        },
+        {'pagLidas': pagL, 'status': status},
       ),
     );
 

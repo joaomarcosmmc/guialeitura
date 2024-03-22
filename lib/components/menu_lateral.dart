@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guialeitura/dados/auth.dart';
+import 'package:guialeitura/pages/auth_or_home_page.dart';
+import 'package:guialeitura/pages/estatistica_page.dart';
 import 'package:guialeitura/pages/home_page.dart';
 import 'package:guialeitura/pages/leitura_futura.dart';
 import 'package:guialeitura/pages/livros_lidos.dart';
@@ -11,7 +13,7 @@ class MenuLateral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.only(bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -77,7 +79,13 @@ class MenuLateral extends StatelessWidget {
                   style: TextStyle(color: Colors.black, fontSize: 20))),
           const Divider(),
           TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (_) => const Estatistica(),
+                  ),
+                );
+              },
               icon: const Icon(Icons.bar_chart_outlined, color: Colors.black),
               label: const Text('Estatística',
                   style: TextStyle(color: Colors.black, fontSize: 20))),
@@ -111,6 +119,7 @@ class MenuLateral extends StatelessWidget {
           TextButton.icon(
               onPressed: () {
                 Provider.of<Auth>(context, listen: false).logOut();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AuthOrHomePage(),));
               },
               icon: const Icon(Icons.logout_rounded, color: Colors.black),
               label: const Text('Sair',

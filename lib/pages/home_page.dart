@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () => openModalCadastro(context),
-        tooltip: 'Increment',
+        tooltip: 'Add Livro',
         child: const Icon(
           Icons.add,
           color: Colors.white,

@@ -72,8 +72,11 @@ class Auth extends ChangeNotifier {
     return _authenticate(email, senha, 'signInWithPassword');
   }
   void logOut() {
+    
     _token = null;
-    print(_token);
+    isAuth;
+
+    print(isAuth);
     notifyListeners();
   }
 }
