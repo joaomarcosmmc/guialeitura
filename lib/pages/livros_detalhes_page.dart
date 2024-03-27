@@ -15,6 +15,7 @@ class LivroDetalhePage extends StatefulWidget {
   State<LivroDetalhePage> createState() => _LivroDetalhepageState();
 }
 
+  
 
 final formKey = GlobalKey<FormState>();
 
@@ -107,416 +108,404 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
     return qtdPagLida / qtdPagTotal;
 
   }
+  
+  
 
   @override
   Widget build(BuildContext context) {
-
- 
-    var espaco = MediaQuery.of(context);
-    return Scaffold(
-      appBar: AppBar(
+  
+    AppBar appBarTeste = AppBar(
         backgroundColor: Colors.amber,
         centerTitle: true,
         title: Text(livro!.titulo, style:const  TextStyle(fontFamily: 'HedvigLetter'),),
         actions: [
           IconButton(onPressed: delete, icon: const Icon(Icons.delete))
         ],
-      ),
+      );
+
+ 
+    var espaco = MediaQuery.of(context);
+  
+    return Scaffold(
+    
+      appBar: appBarTeste,
       body: 
       isDeleting?
       const Center(
         child: CircularProgressIndicator(),
       ):
-      LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: Center(
-            child: Container(
-              margin:const  EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                border:Border.all(width: 1, color: Colors.grey,
-                  ), 
-                borderRadius: BorderRadius.circular(5)
-              ),
-              child: SizedBox(
-                width:
-                    espaco.size.width * percentSizeWidthForm(context, espaco),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Form(
-                        key: formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+
+         SingleChildScrollView(
+            
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      width: espaco.size.width * 0.45,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            '*Título:',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          TextFormField(
+                            initialValue: tituloText.text,
+                            onSaved: (value) =>
+                                tituloText.text = value.toString(),
+                            validator: (value) {
+                              if (value!.length < 3) {
+                                return 'Digite pelo menos 3 caracteres';
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.all(10),
+                                label:
+                                    const Text('Ex: O Código da Vinci'),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(10),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: espaco.size.width * 0.45,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Autor(a):',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          TextFormField(
+                            
+                            
+                            initialValue: autorText.text,
+                            onSaved: (value) =>
+                                autorText.text = value.toString(),
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.all(10),
+                                label: const Text('Ex: Dan Brown'),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(10),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                   
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: (MediaQuery.of(context).size.width *
+                                  percentSizeWidthForm(
+                                      context, espaco)) *
+                              0.50,
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Gênero:',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              TextFormField(
+                                initialValue: generoText.text,
+                                onSaved: (value) =>
+                                    generoText.text = value.toString(),
+                                decoration: InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.all(10),
+                                    label: const Text('Ex: Romance'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    )),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                '*Páginas:',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              SizedBox(
+                                width:
+                                    (MediaQuery.of(context).size.width *
+                                            percentSizeWidthForm(
+                                                context, espaco)) *
+                                        0.30,
+                                child: TextFormField(
+                                  initialValue: paginasText.text,
+                                  onSaved: (value) => paginasText.text =
+                                      value.toString(),
+                                  validator: (value) {
+                                    if (value!.trim().isEmpty) {
+                                      return 'Digite um valor!';
+                                    } else if (int.parse(value) < 1) {
+                                      return 'Digite um número válido';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.all(10),
+                                      label: const Text('Ex: 432'),
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.never,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10),
+                                      )),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Meta/Dia',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              SizedBox(
+                                width:
+                                    (MediaQuery.of(context).size.width *
+                                            percentSizeWidthForm(
+                                                context, espaco)) *
+                                        0.30,
+                                child: TextFormField(
+                                  initialValue: metaText.text,
+                                  onSaved: (value) =>
+                                      metaText.text = value.toString(),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.all(10),
+                                    label: const Text('Ex: 10'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Pag Lidas',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              SizedBox(
+                                width:
+                                    (MediaQuery.of(context).size.width *
+                                            percentSizeWidthForm(
+                                                context, espaco)) *
+                                        0.30,
+                                child: TextFormField(
+                                  initialValue: pagLidasText.text,
+                                  onSaved: (value) => pagLidasText
+                                      .text = value.toString(),
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    contentPadding:
+                                        const EdgeInsets.all(10),
+                                    label: const Text('Ex: 10'),
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 40,
+                      child: Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
-                              width: espaco.size.width * 0.45,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    '*Título:',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  TextFormField(
-                                    initialValue: tituloText.text,
-                                    onSaved: (value) =>
-                                        tituloText.text = value.toString(),
-                                    validator: (value) {
-                                      if (value!.length < 3) {
-                                        return 'Digite pelo menos 3 caracteres';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.all(10),
-                                        label:
-                                            const Text('Ex: O Código da Vinci'),
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.never,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        )),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: espaco.size.width * 0.45,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Autor(a):',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  TextFormField(
-                                    initialValue: autorText.text,
-                                    onSaved: (value) =>
-                                        autorText.text = value.toString(),
-                                    decoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.all(10),
-                                        label: const Text('Ex: Dan Brown'),
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.never,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        )),
-                                  ),
-                                ],
-                              ),
-                            ),
-                           
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(
-                                  width: (MediaQuery.of(context).size.width *
-                                          percentSizeWidthForm(
-                                              context, espaco)) *
-                                      0.50,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Gênero:',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      TextFormField(
-                                        initialValue: generoText.text,
-                                        onSaved: (value) =>
-                                            generoText.text = value.toString(),
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.all(10),
-                                            label: const Text('Ex: Romance'),
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.never,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            )),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        '*Páginas:',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            (MediaQuery.of(context).size.width *
-                                                    percentSizeWidthForm(
-                                                        context, espaco)) *
-                                                0.30,
-                                        child: TextFormField(
-                                          initialValue: paginasText.text,
-                                          onSaved: (value) => paginasText.text =
-                                              value.toString(),
-                                          validator: (value) {
-                                            if (value!.trim().isEmpty) {
-                                              return 'Digite um valor!';
-                                            } else if (int.parse(value) < 1) {
-                                              return 'Digite um número válido';
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                              contentPadding:
-                                                  const EdgeInsets.all(10),
-                                              label: const Text('Ex: 432'),
-                                              floatingLabelBehavior:
-                                                  FloatingLabelBehavior.never,
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              )),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Meta/Dia',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            (MediaQuery.of(context).size.width *
-                                                    percentSizeWidthForm(
-                                                        context, espaco)) *
-                                                0.30,
-                                        child: TextFormField(
-                                          initialValue: metaText.text,
-                                          onSaved: (value) =>
-                                              metaText.text = value.toString(),
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.all(10),
-                                            label: const Text('Ex: 10'),
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.never,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Pag Lidas',
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            (MediaQuery.of(context).size.width *
-                                                    percentSizeWidthForm(
-                                                        context, espaco)) *
-                                                0.30,
-                                        child: TextFormField(
-                                          initialValue: pagLidasText.text,
-                                          onSaved: (value) => pagLidasText
-                                              .text = value.toString(),
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.all(10),
-                                            label: const Text('Ex: 10'),
-                                            floatingLabelBehavior:
-                                                FloatingLabelBehavior.never,
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 40,
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: SizedBox(
+                                child: Row(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: SizedBox(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .values.last,
-                                              activeColor: Colors.amber,
-                                              value: 'lendo',
-                                              groupValue: status,
-                                              onChanged: (value) =>
-                                                  setState(() {
-                                                status = 'lendo';
-                                              }),
-                                            ),
-                                            const Text('Lendo'),
-                                          ],
-                                        ),
-                                      ),
+                                    Radio(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize
+                                              .values.last,
+                                      activeColor: Colors.amber,
+                                      value: 'lendo',
+                                      groupValue: status,
+                                      onChanged: (value) =>
+                                          setState(() {
+                                        status = 'lendo';
+                                      }),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: SizedBox(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .values.last,
-                                              activeColor: Colors.amber,
-                                              value: 'finalizado',
-                                              groupValue: status,
-                                              onChanged: (value) =>
-                                                  setState(() {
-                                                status = 'finalizado';
-                                              }),
-                                            ),
-                                            const Text('Finalizado'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: SizedBox(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              materialTapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .values.last,
-                                              activeColor: Colors.amber,
-                                              value: 'lista',
-                                              groupValue: status,
-                                              onChanged: (value) =>
-                                                  setState(() {
-                                                status = 'lista';
-                                              }),
-                                            ),
-                                            const Text('Lista'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ]),
+                                    const Text('Lendo'),
+                                  ],
+                                ),
+                              ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  const Text('0'),
-                                  Container(
-                                    height: 15,
-                                    width: (MediaQuery.of(context).size.width *
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: SizedBox(
+                                child: Row(
+                                  children: [
+                                    Radio(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize
+                                              .values.last,
+                                      activeColor: Colors.amber,
+                                      value: 'finalizado',
+                                      groupValue: status,
+                                      onChanged: (value) =>
+                                          setState(() {
+                                        status = 'finalizado';
+                                      }),
+                                    ),
+                                    const Text('Finalizado'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: SizedBox(
+                                child: Row(
+                                  children: [
+                                    Radio(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize
+                                              .values.last,
+                                      activeColor: Colors.amber,
+                                      value: 'lista',
+                                      groupValue: status,
+                                      onChanged: (value) =>
+                                          setState(() {
+                                        status = 'lista';
+                                      }),
+                                    ),
+                                    const Text('Lista'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ]),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(vertical: 15.0),
+                      child: Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceAround,
+                        children: [
+                          const Text('0'),
+                          Container(
+                            height: 15,
+                            width: (MediaQuery.of(context).size.width *
+                                    percentSizeWidthForm(
+                                        context, espaco)) *
+                                0.70,
+                            decoration: BoxDecoration(
+                                border: Border.all(width: 1),
+                                color: Colors.grey[200],
+                                borderRadius:
+                                    BorderRadius.circular(20)),
+                            child: FractionallySizedBox(
+                              widthFactor: livro?.pagLidas == 0
+                                  ? 0
+                                  : percent(livro?.pagLidas??1, livro?.qtdPaginas??1),
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                height: 15,
+                                width:
+                                    (MediaQuery.of(context).size.width *
                                             percentSizeWidthForm(
                                                 context, espaco)) *
                                         0.70,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(width: 1),
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: FractionallySizedBox(
-                                      widthFactor: livro?.pagLidas == 0
-                                          ? 0
-                                          : percent(livro?.pagLidas??1, livro?.qtdPaginas??1),
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                        height: 15,
-                                        width:
-                                            (MediaQuery.of(context).size.width *
-                                                    percentSizeWidthForm(
-                                                        context, espaco)) *
-                                                0.70,
-                                        decoration: BoxDecoration(
-                                            color: Colors.amber,
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                      ),
-                                    ),
-                                  ),
-                                  Text('${livro!.qtdPaginas}'),
-                                ],
+                                decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius:
+                                        BorderRadius.circular(20)),
                               ),
                             ),
-                            const Divider(),
-                            const Text(
-                              'Os campos marcados com (*) são de preenchimento obrigatório.',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                            
-                            !isLoad? ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    salvar();
-                                  });
-                                },
-                                child: isLoad
-                                    ? const Text('Salvando')
-                                    : const Text('salvar')):const Padding(
-
-                                      padding:  EdgeInsets.symmetric(vertical: 10),
-                                      child:  Center(
-                                          
-                                          child:  CircularProgressIndicator()),
-                                    )
-                          ],
-                        ),
+                          ),
+                          Text('${livro!.qtdPaginas}'),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const Divider(),
+                    const Text(
+                      'Os campos marcados com (*) são de preenchimento obrigatório.',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    
+                    !isLoad? ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            salvar();
+                          });
+                        },
+                        child: isLoad
+                            ? const Text('Salvando')
+                            : const Text('salvar')):const Padding(
+                    
+                              padding:  EdgeInsets.symmetric(vertical: 10),
+                              child:  Center(
+                                  
+                                  child:  CircularProgressIndicator()),
+                            )
+                  ],
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+  
   }
 }

@@ -91,7 +91,8 @@ class _AuthPageState extends State<AuthPage> {
           ),
           Center(
             child: SizedBox(
-                width: deviceSize.size.width * percentSizeWidthForm(BuildContext, deviceSize),
+              width: deviceSize.size.width *
+                  percentSizeWidthForm(BuildContext, deviceSize),
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
@@ -99,7 +100,7 @@ class _AuthPageState extends State<AuthPage> {
                   children: [
                     Card(
                       elevation: 6,
-                      child: Container(
+                      child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Form(
                           key: formKey,
@@ -115,6 +116,10 @@ class _AuthPageState extends State<AuthPage> {
                                   }
                                 },
                                 decoration: InputDecoration(
+                                  suffix: IconButton( 
+                                    
+                                    onPressed: (){},
+                                    icon: const Icon(Icons.email_outlined) ,) ,
                                     contentPadding: const EdgeInsets.all(10),
                                     label: const Text('E-mail'),
                                     floatingLabelBehavior:
@@ -137,24 +142,28 @@ class _AuthPageState extends State<AuthPage> {
                                 },
                                 obscureText: obscureText,
                                 decoration: InputDecoration(
-                                    suffix: isLogin
-                                        ? IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                obscureText = !obscureText;
-                                              });
-                                            },
-                                            icon: Icon(obscureText
+                                  suffix: isLogin
+                                      ? IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              obscureText = !obscureText;
+                                            });
+                                          },
+                                          icon: Icon(
+                                            obscureText
                                                 ? Icons.visibility_off
-                                                : Icons.visibility))
-                                        : null,
-                                    contentPadding: const EdgeInsets.all(10),
-                                    label: const Text('Password'),
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
+                                                : Icons.visibility,
+                                          ),
+                                        )
+                                      : null,
+                                  contentPadding: const EdgeInsets.all(10),
+                                  label: const Text('Password'),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
                               ),
                               const SizedBox(height: 18),
                               !isLogin
@@ -174,7 +183,8 @@ class _AuthPageState extends State<AuthPage> {
                                               ? IconButton(
                                                   onPressed: () {
                                                     setState(() {
-                                                      obscureText = !obscureText;
+                                                      obscureText =
+                                                          !obscureText;
                                                     });
                                                   },
                                                   icon: Icon(obscureText
@@ -194,7 +204,8 @@ class _AuthPageState extends State<AuthPage> {
                                   : const SizedBox(),
                               isLogin
                                   ? Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Text('Esqueceu a senha? '),
                                         TextButton(
@@ -217,8 +228,8 @@ class _AuthPageState extends State<AuthPage> {
                                                   (states) => Colors.yellow)),
                                       child: Text(
                                         isLogin ? 'Entrar' : 'Cadastrar',
-                                        style:
-                                            const TextStyle(color: Colors.black),
+                                        style: const TextStyle(
+                                            color: Colors.black),
                                       ),
                                     )
                                   : CircularProgressIndicator(
