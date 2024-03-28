@@ -103,7 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListagemLivros(listagem: listagem),
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.red,
+        
+        backgroundColor: Theme.of(context).secondaryHeaderColor,
         onPressed: () => openModalCadastro(context),
         tooltip: 'Add Livro',
         child: const Icon(

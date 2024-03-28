@@ -30,7 +30,21 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.amber,
+         colorScheme: ColorScheme.fromSeed(
+          primary: Colors.amber,
+                  seedColor: Colors.amber,
+        
+         ),
+           primaryColor: Colors.black,
+           secondaryHeaderColor: Colors.red
+           
+
+          
+          
+        
+          
+            
+      
         ),
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,

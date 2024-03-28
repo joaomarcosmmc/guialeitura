@@ -28,9 +28,7 @@ class _CardLivrosState extends State<CardLivros> {
     super.initState();
   }
 
-
   int prev = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,22 +55,24 @@ class _CardLivrosState extends State<CardLivros> {
             children: [
               InkWell(
                 onTap: () {
-                  debugPrint('O código do livro quando chama a página de detalhes é: ${widget.livro.codigo}');
-                  Navigator.of(context)
-                      .pushNamed('/livroDetalhe', arguments: widget.livro.codigo);
+                  debugPrint(
+                      'O código do livro quando chama a página de detalhes é: ${widget.livro.codigo}');
+                  Navigator.of(context).pushNamed('/livroDetalhe',
+                      arguments: widget.livro.codigo);
                 },
                 child: Column(children: [
                   ListTile(
-                    title: Text(
-                      widget.livro.titulo,
-                      style: const TextStyle(
-                          fontSize: 23,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'HedvigLetter'),
-                    ),
-                    subtitle: Text(widget.livro.autor),
-                    trailing: StatusLivro(livro: widget.livro,)
-                  ),
+                      title: Text(
+                        widget.livro.titulo,
+                        style: const TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'HedvigLetter'),
+                      ),
+                      subtitle: Text(widget.livro.autor),
+                      trailing: StatusLivro(
+                        livro: widget.livro,
+                      )),
                   const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,7 +128,9 @@ class _CardLivrosState extends State<CardLivros> {
                           child: FractionallySizedBox(
                             widthFactor: (widget.livro.pagLidas == 0
                                 ? 0
-                                : StatusLivro(livro: widget.livro,).percent(widget.livro.pagLidas,
+                                : StatusLivro(
+                                    livro: widget.livro,
+                                  ).percent(widget.livro.pagLidas,
                                     widget.livro.qtdPaginas)),
                             alignment: Alignment.centerLeft,
                             child: Container(
@@ -185,15 +187,20 @@ class _CardLivrosState extends State<CardLivros> {
                     ),
                   ),
                   ElevatedButton(
-                    
-                    onPressed: widget.livro.pagLidas < widget.livro.qtdPaginas? () {
-                      setState(() {
-                        Provider.of<BdLivros>(context, listen: false)
-                            .addPagLida(context, meta, widget.livro);
-                        meta = widget.livro.metaDia;
-                      });
-                    }:null,
-                    child: const Text('+ Pág. Lidas'),
+                    onPressed: widget.livro.pagLidas < widget.livro.qtdPaginas
+                        ? () {
+                            setState(() {
+                              Provider.of<BdLivros>(context, listen: false)
+                                  .addPagLida(context, meta, widget.livro);
+                              meta = widget.livro.metaDia;
+                            });
+                          }
+                        : null,
+                    child: Text(
+                      'Adicionar',
+                      style: TextStyle(
+                         color: Theme.of(context).primaryColor),
+                    ),
                   ),
                 ],
               ),
@@ -204,4 +211,3 @@ class _CardLivrosState extends State<CardLivros> {
     );
   }
 }
-

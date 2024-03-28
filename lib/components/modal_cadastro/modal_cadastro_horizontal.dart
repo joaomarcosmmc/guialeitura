@@ -308,7 +308,9 @@ class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
                         style: TextStyle(fontSize: 10),
                       ),
                       ElevatedButton(
-                          onPressed: salvar(), child: const Text('Salvar'))
+                          onPressed: salvar(), child:  Text('Salvar',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor)))
                     ],
                   ),
                 ),
