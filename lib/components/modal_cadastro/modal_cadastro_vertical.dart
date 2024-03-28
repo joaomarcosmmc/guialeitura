@@ -46,6 +46,8 @@ class _ModalCadastroVerticalState extends State<ModalCadastroVertical> {
         status: status,
         pagLidas:
             status == 'finalizado' ? int.parse(widget.paginasText.text) : 0,
+            dataInicio: DateTime.now().subtract(const Duration(days: 2)),
+        dataPrevFim: DateTime.now().add(const Duration(days: 2)),
       ),
     );
 

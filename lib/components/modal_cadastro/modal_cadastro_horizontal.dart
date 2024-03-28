@@ -55,6 +55,8 @@ class _ModalCadastroHorizontalState extends State<ModalCadastroHorizontal> {
         metaDia: widget.metaText.text.isEmpty ? 0 : int.parse(widget.metaText.text),
         status: status,
         pagLidas: status == 'finalizado'? int.parse(widget.paginasText.text): 0,
+        dataInicio: DateTime.now().subtract(const Duration(days: 2)),
+        dataPrevFim: DateTime.now().add(const Duration(days: 2)),
       ),
     );
  

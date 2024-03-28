@@ -8,6 +8,8 @@ class Livro{
   int qtdPaginas;
   int metaDia;
   String status;
+  DateTime dataInicio;
+  DateTime dataPrevFim;
 
   Livro({
     this.codigo,
@@ -19,6 +21,8 @@ class Livro{
     required this.qtdPaginas,
     required this.metaDia,
     required this.status,
+    required this.dataInicio,
+    required this.dataPrevFim,
   });
 
 

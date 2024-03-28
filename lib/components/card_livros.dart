@@ -18,6 +18,22 @@ class _CardLivrosState extends State<CardLivros> {
   var meta = 1;
   var dt = DateTime.now();
 
+  int quantidadeDePaginas = 432;
+  int paginasLidas = 20;
+  int metaPorDia = 10;
+  DateTime dtInit = DateTime.now().subtract(const Duration(days: 2));
+  DateTime dtEnd = DateTime.now().add(const Duration(days: 3));
+
+  double metricaMeta() {
+    var t = widget.livro.dataPrevFim.day - widget.livro.dataInicio.day;
+    var r = widget.livro.dataPrevFim.day - DateTime.now().day;
+    var metaParcial = (r * widget.livro.metaDia) / quantidadeDePaginas;
+    debugPrint(t.toString());
+    debugPrint(r.toString());
+    debugPrint(metaParcial.toString());
+    return metaParcial;
+  }
+
   @override
   initState() {
     debugPrint('O código do livro éfdfjasdkfjak: ${widget.livro.codigo}');
@@ -118,29 +134,59 @@ class _CardLivrosState extends State<CardLivros> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         const Text('0'),
-                        Container(
-                          height: 15,
-                          width: constraints.minWidth * 0.8,
-                          decoration: BoxDecoration(
-                              border: Border.all(width: 1),
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(20)),
-                          child: FractionallySizedBox(
-                            widthFactor: (widget.livro.pagLidas == 0
-                                ? 0
-                                : StatusLivro(
-                                    livro: widget.livro,
-                                  ).percent(widget.livro.pagLidas,
-                                    widget.livro.qtdPaginas)),
-                            alignment: Alignment.centerLeft,
-                            child: Container(
+                        Stack(
+                          children: [
+                            Container(
                               height: 15,
                               width: constraints.minWidth * 0.8,
                               decoration: BoxDecoration(
-                                  color: Colors.amber,
+                                  border: Border.all(width: 1),
+                                  color: Colors.grey[200],
                                   borderRadius: BorderRadius.circular(20)),
+                              child: FractionallySizedBox(
+                                widthFactor: metricaMeta(),
+                                /*(widget.livro.pagLidas == 0
+                                    ? 0
+                                    : StatusLivro(
+                                        livro: widget.livro,
+                                      ).percent(widget.livro.pagLidas,
+                                        widget.livro.qtdPaginas)),*/
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height: 15,
+                                  width: constraints.minWidth * 0.8,
+                                  decoration: BoxDecoration(
+                                      
+                                      color: Colors.green[200]!.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(1)),
+                                ),
+                              ),
                             ),
-                          ),
+                            Container(
+                              height: 15,
+                              width: constraints.minWidth * 0.8,
+                              decoration: BoxDecoration(
+                                  border: Border.all(width: 1),
+                                  //color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: FractionallySizedBox(
+                                widthFactor: (widget.livro.pagLidas == 0
+                                    ? 0
+                                    : StatusLivro(
+                                        livro: widget.livro,
+                                      ).percent(widget.livro.pagLidas,
+                                        widget.livro.qtdPaginas)),
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height: 15,
+                                  width: constraints.minWidth * 0.8,
+                                  decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(20)),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Text(widget.livro.qtdPaginas.toString()),
                       ],
@@ -198,8 +244,7 @@ class _CardLivrosState extends State<CardLivros> {
                         : null,
                     child: Text(
                       'Adicionar',
-                      style: TextStyle(
-                         color: Theme.of(context).primaryColor),
+                      style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
                 ],

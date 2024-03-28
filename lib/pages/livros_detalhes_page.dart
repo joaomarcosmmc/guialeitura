@@ -40,6 +40,8 @@ class _LivroDetalhepageState extends State<LivroDetalhePage> {
         metaDia: metaText.text.isEmpty ? 0 : int.parse(metaText.text),
         status: livro!.qtdPaginas == livro!.pagLidas ? 'finalizado' : 'lendo',
         pagLidas: int.parse(pagLidasText.text),
+        dataInicio: DateTime.now().subtract(const Duration(days: 2)), 
+        dataPrevFim: DateTime.now().add(const Duration(days: 2)),
       ) ,
     ).then((value) =>setState(() {
       isLoad =false;

@@ -94,6 +94,8 @@ class BdLivros extends ChangeNotifier {
             metaDia: livro.metaDia,
             status: livro.status,
             pagLidas: livro.pagLidas,
+            dataInicio: livro.dataInicio,
+            dataPrevFim: livro.dataPrevFim,
           ),
         );
       });
@@ -126,6 +128,8 @@ class BdLivros extends ChangeNotifier {
               qtdPaginas: livro['qtdPaginas'],
               metaDia: livro['metaDia'],
               status: livro['status'],
+              dataInicio: livro['dataInicio'],
+              dataPrevFim: livro['dataPrevFim'],
             ),
           );
         }
